@@ -48,13 +48,13 @@
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_account"
+                    android:id="@+id/et_phoneNumber"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_username"
                     android:drawableLeft="@drawable/ic_username"
                     android:drawablePadding="8.0dip"
-                    android:hint="@string/hint_login_username"
+                    android:hint="@string/hint_register_phoneNumber"
                     android:imeOptions="actionNext"
                     android:inputType="textVisiblePassword"
                     android:lines="1"
@@ -75,14 +75,14 @@
                 app:passwordToggleTint="#50ffffff">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_password"
+                    android:id="@+id/et_confirmCode"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:digits="@string/digits_password"
                     android:drawableStart="@drawable/ic_password"
                     android:drawableLeft="@drawable/ic_password"
                     android:drawablePadding="8.0dip"
-                    android:hint="@string/hint_input_password"
+                    android:hint="@string/hint_register_confirmCode"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:lines="1"
@@ -94,22 +94,6 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/cb_remember_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="8.0dip"
-            android:button="@drawable/remember_password_checkbox_selector"
-            android:checked="true"
-            android:padding="8.0dip"
-            android:text="@string/remember_password"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/hint_text"
-            app:layout_constraintLeft_toLeftOf="@id/llyt_form"
-            app:layout_constraintTop_toBottomOf="@id/llyt_form" />
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_forget_password"
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -119,7 +103,7 @@
             android:layout_marginTop="8.0dip"
             android:minHeight="0.0dip"
             android:padding="8.0dip"
-            android:text="@string/button_forget_password"
+            android:text="@string/button_get_confirmCode"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/hint_text"
             app:layout_constraintRight_toRightOf="@id/llyt_form"
@@ -135,7 +119,7 @@
             android:background="@drawable/bg_btn_round_rect"
             android:minHeight="0.0dip"
             android:padding="8.0dip"
-            android:text="@string/button_login"
+            android:text="@string/button_register"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="@id/llyt_form"
@@ -143,7 +127,7 @@
             app:layout_constraintTop_toBottomOf="@id/btn_forget_password" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_to_register"
+            android:id="@+id/btn_to_login"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,7 +137,7 @@
             android:layout_marginRight="8.0dip"
             android:minHeight="0.0dip"
             android:padding="8.0dip"
-            android:text="@string/button_goto_register"
+            android:text="@string/button_goto_login"
             android:textColor="@color/hint_text"
             app:layout_constraintLeft_toLeftOf="@id/btn_login"
             app:layout_constraintRight_toRightOf="@id/btn_login"
@@ -167,11 +151,11 @@
             android:layout_marginTop="16.0dip"
             android:layout_marginRight="0.0dip"
             android:padding="8.0dip"
-            android:text="@string/label_third_part_login"
+            android:text="@string/label_third_part_register"
             android:textColor="@color/hint_text"
-            app:layout_constraintLeft_toLeftOf="@id/btn_to_register"
-            app:layout_constraintRight_toRightOf="@id/btn_to_register"
-            app:layout_constraintTop_toBottomOf="@id/btn_to_register" />
+            app:layout_constraintLeft_toLeftOf="@id/btn_to_login"
+            app:layout_constraintRight_toRightOf="@id/btn_to_login"
+            app:layout_constraintTop_toBottomOf="@id/btn_to_login" />
 
         <View
             android:id="@+id/view"
