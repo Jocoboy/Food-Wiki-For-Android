@@ -78,13 +78,12 @@
                     android:id="@+id/et_confirmCode"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:digits="@string/digits_password"
                     android:drawableStart="@drawable/ic_password"
                     android:drawableLeft="@drawable/ic_password"
                     android:drawablePadding="8.0dip"
                     android:hint="@string/hint_register_confirmCode"
                     android:imeOptions="actionDone"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:lines="1"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -95,7 +94,7 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_forget_password"
+            android:id="@+id/btn_get_confirmCode"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,7 +109,7 @@
             app:layout_constraintTop_toBottomOf="@id/llyt_form" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_register"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -124,7 +123,7 @@
             android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="@id/llyt_form"
             app:layout_constraintRight_toRightOf="@id/llyt_form"
-            app:layout_constraintTop_toBottomOf="@id/btn_forget_password" />
+            app:layout_constraintTop_toBottomOf="@id/btn_get_confirmCode" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_to_login"
@@ -139,9 +138,9 @@
             android:padding="8.0dip"
             android:text="@string/button_goto_login"
             android:textColor="@color/hint_text"
-            app:layout_constraintLeft_toLeftOf="@id/btn_login"
-            app:layout_constraintRight_toRightOf="@id/btn_login"
-            app:layout_constraintTop_toBottomOf="@id/btn_login" />
+            app:layout_constraintLeft_toLeftOf="@id/btn_register"
+            app:layout_constraintRight_toRightOf="@id/btn_register"
+            app:layout_constraintTop_toBottomOf="@id/btn_register" />
 
         <TextView
             android:id="@+id/tv_third_part_login_label"
@@ -165,7 +164,7 @@
             android:layout_marginBottom="0.0dip"
             android:background="@color/hint_text"
             app:layout_constraintBottom_toBottomOf="@id/tv_third_part_login_label"
-            app:layout_constraintLeft_toLeftOf="@id/btn_login"
+            app:layout_constraintLeft_toLeftOf="@id/btn_register"
             app:layout_constraintRight_toLeftOf="@id/tv_third_part_login_label"
             app:layout_constraintTop_toTopOf="@id/tv_third_part_login_label"
             app:layout_constraintVertical_bias="0.5" />
@@ -178,7 +177,7 @@
             android:background="@color/hint_text"
             app:layout_constraintBottom_toBottomOf="@id/tv_third_part_login_label"
             app:layout_constraintLeft_toRightOf="@id/tv_third_part_login_label"
-            app:layout_constraintRight_toRightOf="@id/btn_login"
+            app:layout_constraintRight_toRightOf="@id/btn_register"
             app:layout_constraintTop_toTopOf="@id/tv_third_part_login_label"
             app:layout_constraintVertical_bias="0.5" />
 
