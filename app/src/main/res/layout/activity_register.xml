@@ -45,6 +45,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/input_layout_phoneNumber"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -66,7 +67,32 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/input_layout_email"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_username"
+                    android:drawableLeft="@drawable/ic_username"
+                    android:drawablePadding="8.0dip"
+                    android:hint="@string/hint_register_email"
+                    android:imeOptions="actionNext"
+                    android:inputType="textVisiblePassword"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_confirmCode"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
@@ -82,6 +108,62 @@
                     android:drawableLeft="@drawable/ic_password"
                     android:drawablePadding="8.0dip"
                     android:hint="@string/hint_register_confirmCode"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                app:passwordToggleDrawable="@drawable/ic_password_visibility_selector"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#50ffffff"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_password"
+                    android:drawableLeft="@drawable/ic_password"
+                    android:drawablePadding="8.0dip"
+                    android:hint="@string/hint_register_password"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_confirmPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                app:passwordToggleDrawable="@drawable/ic_password_visibility_selector"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#50ffffff"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_confirmPassword"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_password"
+                    android:drawableLeft="@drawable/ic_password"
+                    android:drawablePadding="8.0dip"
+                    android:hint="@string/hint_register_confirmPassword"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:lines="1"
@@ -109,6 +191,22 @@
             app:layout_constraintTop_toBottomOf="@id/llyt_form" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_phone_register"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8.0dip"
+            android:minHeight="0.0dip"
+            android:padding="8.0dip"
+            android:text="@string/button_phone_register"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/hint_text"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="@id/llyt_form"
+            app:layout_constraintTop_toBottomOf="@id/llyt_form" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_register"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
@@ -121,9 +219,28 @@
             android:text="@string/button_register"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
+
             app:layout_constraintLeft_toLeftOf="@id/llyt_form"
             app:layout_constraintRight_toRightOf="@id/llyt_form"
             app:layout_constraintTop_toBottomOf="@id/btn_get_confirmCode" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register_email"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8.0dip"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/bg_btn_round_rect"
+            android:minHeight="0.0dip"
+            android:padding="8.0dip"
+            android:text="@string/button_register"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@id/llyt_form"
+            app:layout_constraintRight_toRightOf="@id/llyt_form"
+            app:layout_constraintTop_toBottomOf="@id/btn_phone_register" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_to_login"
@@ -191,7 +308,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_third_part_login_label">
 
             <ImageButton
-                android:id="@+id/ibtn_phone_code_login"
+                android:id="@+id/ibtn_email_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
@@ -204,7 +321,7 @@
                 android:layout_height="fill_parent" />
 
             <ImageButton
-                android:id="@+id/ibtn_wechat_login"
+                android:id="@+id/ibtn_wechat_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
@@ -217,7 +334,7 @@
                 android:layout_height="fill_parent" />
 
             <ImageButton
-                android:id="@+id/ibtn_trial_login"
+                android:id="@+id/ibtn_qq_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"

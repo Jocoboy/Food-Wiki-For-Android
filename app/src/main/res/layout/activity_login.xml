@@ -208,7 +208,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_third_part_login_label">
 
             <ImageButton
-                android:id="@+id/ibtn_phone_code_login"
+                android:id="@+id/ibtn_email_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
@@ -234,7 +234,7 @@
                 android:layout_height="fill_parent" />
 
             <ImageButton
-                android:id="@+id/ibtn_trial_login"
+                android:id="@+id/ibtn_qq_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
