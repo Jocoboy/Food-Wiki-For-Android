@@ -29,9 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity">
-
-        </activity>
+        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".TableUserActivity"></activity>
 
         <activity
             android:name="com.mob.tools.MobUIShell"
