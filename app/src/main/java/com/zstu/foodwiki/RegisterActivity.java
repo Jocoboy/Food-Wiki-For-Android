@@ -1,5 +1,6 @@
 package com.zstu.foodwiki;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
@@ -133,6 +134,21 @@ public class RegisterActivity extends AppCompatActivity implements  View.OnClick
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                if(resultCode==200){
+
+                    boolean res = data.getBooleanExtra("doesRegisterSuccess",false);
+                    if(res){
+                        Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,12 +232,11 @@ public class RegisterActivity extends AppCompatActivity implements  View.OnClick
                         intent_user.putExtra("username", email);
                         intent_user.putExtra("password", password);
                         intent_user.putExtra("operation", 1);
-                        startActivity(intent_user);
-                        finish();
-                        Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_LONG).show();
+                        startActivityForResult(intent_user,1);
+
                     }
                 }
-                //TODO
+
                 break;
             case R.id.ibtn_email_register:
                 radioRegister(false);
