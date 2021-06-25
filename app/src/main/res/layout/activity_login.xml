@@ -75,10 +75,9 @@
                 app:passwordToggleTint="#50ffffff">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_password"
+                    android:id="@+id/et_password_login"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:digits="@string/digits_password"
                     android:drawableStart="@drawable/ic_password"
                     android:drawableLeft="@drawable/ic_password"
                     android:drawablePadding="8.0dip"

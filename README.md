@@ -17,7 +17,7 @@
 ### 命令行查看SQLiteDatabase
 
 ```powershell
-/*输入 abd shell 进入设备控制台*/
+/*输入 adb shell 进入设备控制台*/
 PS C:\Users\Jocoboy> adb shell
 /*使用 cd 命令进入到数据库存放目录下*/
 generic_x86:/ # cd /data/data/com.zstu.foodwiki/databases/
