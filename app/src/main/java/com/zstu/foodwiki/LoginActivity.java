@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.StringTokenizer;
+
 public class LoginActivity extends AppCompatActivity implements  View.OnClickListener{
 
     private EditText edit_username;
@@ -19,7 +21,10 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     private Button btn_login;
 
     private boolean doesUsernameExist = false;
+    private String username;
+    private String password;
     private String realPassword = "";
+    private int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +48,24 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
 
                 }
             case 2:
-                if(resultCode==200){
+                if(resultCode==210){
                     realPassword = data.getStringExtra("password");
-                    if(realPassword==null){
+                    user_id = data.getIntExtra("id", 0);
+                    /*if(realPassword==null){
                         realPassword = "123456";
+                    }*/
+
+                    if(password.equals(realPassword)){
+                        Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
+                        Intent newIntent = new Intent(LoginActivity.this,HomePageActivity.class);
+                        newIntent.putExtra("userid", user_id);
+                        newIntent.putExtra("username", username);
+                        startActivity(newIntent);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this,"用户密码错误",Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this,"password: "+ password + " realPassword: "+ realPassword,Toast.LENGTH_LONG).show();
                     }
                 }
         }
@@ -81,22 +100,13 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                         edit_password.requestFocus();
                     }
                     else{
-                        String username = edit_username.getText().toString().trim();
-                        String password = edit_password.getText().toString().trim();
+                        username = edit_username.getText().toString().trim();
+                        password = edit_password.getText().toString().trim();
                         Intent intent_user = new Intent(LoginActivity.this,TableUserActivity.class);
                         intent_user.putExtra("username", username);
                         intent_user.putExtra("operation", 3);
                         startActivityForResult(intent_user,2);
-                        if(password.equals(realPassword)){
-                            Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
-                            Intent newIntent = new Intent(LoginActivity.this,HomePageActivity.class);
-                            startActivity(newIntent);
-                            finish();
-                        }
-                        else{
-                            Toast.makeText(LoginActivity.this,"用户密码错误",Toast.LENGTH_LONG).show();
-                            Toast.makeText(LoginActivity.this,"password: "+ password + " realPassword: "+ realPassword,Toast.LENGTH_LONG).show();
-                        }
+
                     }
                 }
 

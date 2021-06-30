@@ -15,7 +15,14 @@ public class TableUserActivity extends AppCompatActivity {
     public static final int INSERT = 1;
     public static  final int CHECK_CURSOR_EXIST = 2;
     public static final  int GET_PASSWORD = 3;
-    private static int curId = 0;
+    //private static int curId = 0;
+
+    private int pk_id;
+    private String username;
+    private String password;
+
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,17 +30,23 @@ public class TableUserActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int op = intent.getIntExtra("operation",0);
-        String username;
-        String password;
+
         switch (op){
             case INSERT:
                 username = intent.getStringExtra("username");
                 password = intent.getStringExtra("password");
-                InsertUser(curId,username,password);
+                InsertUser(/*curId,*/username,password);
+                //curId++;
                 Intent intent1 = new Intent();
                 intent1.putExtra("doesRegisterSuccess", true);
-                setResult(200,intent1);
+                setResult(190,intent1);
                 finish();
+
+                /******************级联操作****************/
+                Intent intent_cascade = new Intent(TableUserActivity.this,TableUserInfoActivity.class);
+                intent_cascade.putExtra("operation", TableUserInfoActivity.INSERT);
+                startActivity(intent_cascade);
+
                 break;
 
             case CHECK_CURSOR_EXIST:
@@ -49,7 +62,9 @@ public class TableUserActivity extends AppCompatActivity {
                 password = queryUserPassword(username);
                 Intent intent3 = new Intent();
                 intent3.putExtra("password", password);
-                setResult(200, intent3);
+                intent3.putExtra("id", pk_id);
+                System.out.println("in case GET_PASSWORD " +"password："+password);
+                setResult(210, intent3);
                 finish();
                 break;
                 default:
@@ -83,20 +98,7 @@ public class TableUserActivity extends AppCompatActivity {
         return  res;
     }
 
-    public void queryUser(){
 
-        UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query("tb_user", new String[]{"id","username","password"}, "username=?", new String[]{"1"}, null, null, null);
-        while(cursor.moveToNext()){
-            String id = cursor.getString(cursor.getColumnIndex("id"));
-            String username = cursor.getString(cursor.getColumnIndex("username"));
-            String password = cursor.getString(cursor.getColumnIndex("password"));
-            System.out.println("query------->" + "id："+id+" "+"username："+username+" "+"password："+password);
-        }
-
-        db.close();
-    }
 
 
     public  String queryUserPassword(String username){
@@ -105,29 +107,47 @@ public class TableUserActivity extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String password="";
-        Cursor cursor = db.query("tb_user", new String[]{"id","username","password"}, "username=?", new String[]{username}, null, null, null);
+        Cursor cursor = db.query("tb_user", new String[]{"password","id"}, "username=?", new String[]{username}, null, null, null);
         /*if(cursor.getCount()==0){
             password="???";
-        }
+        }s
         else{*/
-            if((cursor.moveToFirst())){
+           if((cursor.moveToFirst())){
                 password = cursor.getString(cursor.getColumnIndex("password"));
+                pk_id = cursor.getInt(cursor.getColumnIndex("id"));
+               // System.out.println("query------->" +"password："+password);
             }
+          // password = cursor.moveToNext()+"";
         /*}*/
         db.close();
         return password;
     }
 
-    public void InsertUser(int id,String username,String password){
+    public void InsertUser(/*int id,*/String username,String password){
 
         UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put("id", id);
+        //cv.put("id", id);
         cv.put("username", username);
         cv.put("password", password);
         db.insert("tb_user", null, cv);
+
+        db.close();
+    }
+
+    public void queryUser(int id){
+
+        UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query("tb_user", new String[]{"id","username","password"}, "username=?", new String[]{String.valueOf(id)}, null, null, null);
+        while(cursor.moveToNext()){
+            //String id = cursor.getString(cursor.getColumnIndex("id"));
+            String username = cursor.getString(cursor.getColumnIndex("username"));
+            String password = cursor.getString(cursor.getColumnIndex("password"));
+            System.out.println("query------->" + "id："+id+" "+"username："+username+" "+"password："+password);
+        }
 
         db.close();
     }
