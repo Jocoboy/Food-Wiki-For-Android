@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity implements  View.OnClick
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case 1:
-                if(resultCode==200){
+                if(resultCode==190){
 
                     boolean res = data.getBooleanExtra("doesRegisterSuccess",false);
                     if(res){

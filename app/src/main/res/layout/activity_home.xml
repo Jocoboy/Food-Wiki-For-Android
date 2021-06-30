@@ -53,6 +53,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/username"
@@ -61,6 +62,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_uid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
@@ -80,6 +82,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/tv_remark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -113,6 +116,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_follows"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="229"
@@ -131,6 +135,7 @@
                         android:orientation="vertical">
 
                         <TextView
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/follower"
@@ -139,6 +144,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_followers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="111"
@@ -164,6 +170,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_readers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3999"

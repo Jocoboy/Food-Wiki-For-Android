@@ -98,6 +98,14 @@ h --> UC10
 
 ![物理模型](documents\物理模型.png)
 
+```sql
+create table tb_user(id integer primary key autoincrement,username varchar(50),password varchar(50));
+
+create table tb_userinfo (id integer primary key autoincrement,userid integer,name varchar(50),follows int,followers int,readers int,remark varchar(200),foreign key(userid) references tb_user(id));
+```
+
+
+
 ### 命令行查看SQLiteDatabase
 
 ```powershell
@@ -130,9 +138,17 @@ CREATE TABLE tb_user(id int,username varchar(50),password varchar(50));
 /*输入 sql 语句查询表中数据*/
 sqlite> select * from tb_user;
 0|123@qq.com|123456
+
+/*输入 sql 语句删除表中某一行*/
+sqlite> delete from tb_user where id="1";
+
+/*输入 sql 语句删除表*/
+sqlite> drop table tb_user;
 ```
 
 ## 核心类的设计和关系
+
+![UML类图](documents\UML类图.png)
 
 ## 界面设计
 
