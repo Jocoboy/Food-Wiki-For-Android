@@ -19,12 +19,14 @@ public class UserInfoDBHelper extends SQLiteOpenHelper {
                 "(" +
                 "id integer primary key autoincrement," +
                 "userid integer," +
+                "figureid integer,"+
                 "name varchar(50)," +
                 "follows int," +
                 "followers int," +
                 "readers int," +
                 "remark varchar(200)," +
-                "foreign key(userid) references tb_user(id)"+
+                "foreign key(userid) references tb_user(id),"+
+                "foreign key(figureid) references tb_file(id)"+
                 ")";
         Log.i(TAG, "create Database------------->");
         db.execSQL(sql);

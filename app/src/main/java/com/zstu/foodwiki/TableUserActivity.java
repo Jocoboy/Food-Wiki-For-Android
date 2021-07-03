@@ -15,7 +15,7 @@ public class TableUserActivity extends AppCompatActivity {
     public static final int INSERT = 1;
     public static  final int CHECK_CURSOR_EXIST = 2;
     public static final  int GET_PASSWORD = 3;
-    //private static int curId = 0;
+    private static int curId = 0;
 
     private int pk_id;
     private String username;
@@ -35,7 +35,7 @@ public class TableUserActivity extends AppCompatActivity {
             case INSERT:
                 username = intent.getStringExtra("username");
                 password = intent.getStringExtra("password");
-                InsertUser(/*curId,*/username,password);
+                curId = InsertUser(/*curId,*/username,password);
                 //curId++;
                 Intent intent1 = new Intent();
                 intent1.putExtra("doesRegisterSuccess", true);
@@ -45,6 +45,7 @@ public class TableUserActivity extends AppCompatActivity {
                 /******************级联操作****************/
                 Intent intent_cascade = new Intent(TableUserActivity.this,TableUserInfoActivity.class);
                 intent_cascade.putExtra("operation", TableUserInfoActivity.INSERT);
+                intent_cascade.putExtra("userid", curId);
                 startActivity(intent_cascade);
 
                 break;
@@ -123,7 +124,7 @@ public class TableUserActivity extends AppCompatActivity {
         return password;
     }
 
-    public void InsertUser(/*int id,*/String username,String password){
+    public int InsertUser(/*int id,*/String username,String password){
 
         UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -134,7 +135,14 @@ public class TableUserActivity extends AppCompatActivity {
         cv.put("password", password);
         db.insert("tb_user", null, cv);
 
+        int insert_id = -1;
+        Cursor cursor = db.rawQuery("select last_insert_rowid() from tb_user", null);
+        if(cursor.moveToFirst()){
+            insert_id = cursor.getInt(0);
+        }
+
         db.close();
+        return insert_id;
     }
 
     public void queryUser(int id){
