@@ -18,6 +18,7 @@ public class TableUserInfoActivity extends AppCompatActivity {
 
     private int pk_id;
     private int userid;
+    private int figureid;
     private String name;
     private String remark;
     private int follows;
@@ -43,12 +44,14 @@ public class TableUserInfoActivity extends AppCompatActivity {
                     intent1.putExtra("followers", followers);
                     intent1.putExtra("readers", readers);
                     intent1.putExtra("remark", remark);
+                    intent1.putExtra("figureid", figureid);
                     setResult(290,intent1);
                     finish();
                 }
                 break;
             case INSERT:
-                InsertUserInfo();
+                userid = intent.getIntExtra("userid",-1);
+                InsertUserInfo(true);
                 finish();
                 break;
             default:
@@ -57,7 +60,7 @@ public class TableUserInfoActivity extends AppCompatActivity {
         }
     }
 
-    public void InsertUserInfo(){
+    public void InsertUserInfo(boolean setDefalutValue){
 
         System.out.println("InsertUserInfo function called!!!!!!!");
 
@@ -67,21 +70,29 @@ public class TableUserInfoActivity extends AppCompatActivity {
 
         ContentValues cv = new ContentValues();
 
-        /* cv.put("userid", userid);
-        cv.put("name", name);
-        cv.put("remark", remark);
-        cv.put("follows", follows);
-        cv.put("followers", followers);
-        cv.put("readers", readers);*/
 
-        /*****************仅测试*******************/
-        cv.put("userid", "1");
-        cv.put("name", "半杯咖啡享一世");
-        cv.put("remark", "这世间，唯爱与美食不可辜负（关注我了解更多本地美食）");
-        cv.put("follows", 111);
-        cv.put("followers", 233);
-        cv.put("readers", 9999);
-        /*****************仅测试*******************/
+        if(setDefalutValue){
+            /*****************默认值*******************/
+            cv.put("userid", userid);
+            cv.put("figureid", 1);
+            cv.put("name", "尚未填写昵称");
+            cv.put("remark", "这家伙很懒，什么都没写~");
+            cv.put("follows", 0);
+            cv.put("followers", 0);
+            cv.put("readers", 0);
+            /*****************默认值*******************/
+        }
+        else{
+
+            cv.put("userid", userid);
+            cv.put("figureid", figureid);
+            cv.put("name", name);
+            cv.put("remark", remark);
+            cv.put("follows", follows);
+            cv.put("followers", followers);
+            cv.put("readers", readers);
+        }
+
         db.insert("tb_userinfo", null, cv);
 
         db.close();
@@ -99,6 +110,7 @@ public class TableUserInfoActivity extends AppCompatActivity {
             follows = cursor.getInt(cursor.getColumnIndex("follows"));
             followers = cursor.getInt(cursor.getColumnIndex("followers"));
             readers = cursor.getInt(cursor.getColumnIndex("readers"));
+            figureid = cursor.getInt(cursor.getColumnIndex("figureid"));
         }
         db.close();
         return true;

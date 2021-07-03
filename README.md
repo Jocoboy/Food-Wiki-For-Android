@@ -101,7 +101,11 @@ h --> UC10
 ```sql
 create table tb_user(id integer primary key autoincrement,username varchar(50),password varchar(50));
 
-create table tb_userinfo (id integer primary key autoincrement,userid integer,name varchar(50),follows int,followers int,readers int,remark varchar(200),foreign key(userid) references tb_user(id));
+create table tb_file(id integer primary key autoincrement,name varchar(50),extension varchar(20),bin blob,path varchar(100),descripiton varchar(200));
+
+create table tb_userinfo (id integer primary key autoincrement,userid integer,figureid integer,name varchar(50),follows int,followers int,readers int,remark varchar(200),foreign key(userid) references tb_user(id),foreign key(figureid) references tb_file(id));
+
+
 ```
 
 
@@ -111,6 +115,10 @@ create table tb_userinfo (id integer primary key autoincrement,userid integer,na
 ```powershell
 /*输入 adb shell 进入设备控制台*
 PS C:\Users\Jocoboy> adb shell
+
+generic_x86:/ $ su
+generic_x86:/ #
+
 /*使用 cd 命令进入到数据库存放目录下*/
 generic_x86:/ # cd /data/data/com.zstu.foodwiki/databases/
 /*使用 ls 命令查看该目录里的文件*
