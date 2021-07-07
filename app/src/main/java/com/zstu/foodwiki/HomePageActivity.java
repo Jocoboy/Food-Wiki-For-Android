@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static  final  String TAG = "TEST_HomePageActivity";
 
@@ -24,6 +27,7 @@ public class HomePageActivity extends AppCompatActivity {
     TextView tv_followers;
     TextView tv_readers;
     ImageView iv_figure;
+    ImageButton ibtn_setting;
 
     private  int userid;
     private int figureid;
@@ -89,6 +93,19 @@ public class HomePageActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ibtn_setting:
+                Intent intent = new Intent(HomePageActivity.this,SettingPageActivity.class);
+                intent.putExtra("userid",userid);
+                startActivity(intent);
+                break;
+                default:
+                    break;
+        }
+    }
+
     public void getId(){
 
         tv_name = findViewById(R.id.tv_name);
@@ -98,10 +115,11 @@ public class HomePageActivity extends AppCompatActivity {
         tv_followers = findViewById(R.id.tv_followers);
         tv_readers = findViewById(R.id.tv_readers);
         iv_figure = findViewById(R.id.iv_figure);
+        ibtn_setting = findViewById(R.id.ibtn_setting);
     }
 
     public void bindingEvents(){
-
+        ibtn_setting.setOnClickListener(this);
     }
 
     public void loadData(){

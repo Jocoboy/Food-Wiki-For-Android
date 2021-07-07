@@ -9,4 +9,5 @@
     <color name="black">#090808</color>
     <color name="accent">#3C3F51B5</color>
     <color name="background">#9192A2</color>
+    <color name="black_transparent">#81000000</color>
 </resources>
