@@ -180,12 +180,13 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <TextView
+                    <ImageButton
+                        android:id="@+id/ibtn_setting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/setting"
+                        android:background="@drawable/ic_setting"
                         android:paddingBottom="3dp"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
@@ -221,7 +222,7 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:icon="@drawable/tab" />
+                android:icon="@drawable/ic_tab_home" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"

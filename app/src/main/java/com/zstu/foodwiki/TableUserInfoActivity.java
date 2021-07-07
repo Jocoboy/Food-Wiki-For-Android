@@ -15,6 +15,7 @@ public class TableUserInfoActivity extends AppCompatActivity {
 
     public static final int GET_ALL = 1;
     public static final int INSERT = 2;
+    public static final int UPDATE = 3;
 
     private int pk_id;
     private int userid;
@@ -25,6 +26,8 @@ public class TableUserInfoActivity extends AppCompatActivity {
     private int followers;
     private int readers;
 
+    private String new_name;
+    private String new_remark;
 
 
     @Override
@@ -51,7 +54,16 @@ public class TableUserInfoActivity extends AppCompatActivity {
                 break;
             case INSERT:
                 userid = intent.getIntExtra("userid",-1);
-                InsertUserInfo(true);
+                insertUserInfo(true);
+                finish();
+                break;
+            case UPDATE:
+                userid = intent.getIntExtra("userid",-1);
+                new_name = intent.getStringExtra("new_name");
+                new_remark = intent.getStringExtra("new_remark");
+                updateUserInfoByUserId(userid);
+                Intent intent2 = new Intent();
+                setResult(120,intent2);
                 finish();
                 break;
             default:
@@ -60,7 +72,7 @@ public class TableUserInfoActivity extends AppCompatActivity {
         }
     }
 
-    public void InsertUserInfo(boolean setDefalutValue){
+    public void insertUserInfo(boolean setDefalutValue){
 
         System.out.println("InsertUserInfo function called!!!!!!!");
 
@@ -97,6 +109,25 @@ public class TableUserInfoActivity extends AppCompatActivity {
 
         db.close();
     }
+
+    public boolean updateUserInfoByUserId(int id){
+        UserInfoDBHelper dbHelper = new UserInfoDBHelper(TableUserInfoActivity.this, "tb_userinfo", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+
+        ContentValues cv = new ContentValues();
+        cv.put("name", new_name);
+        cv.put("remark", new_remark);
+
+        String whereClause = "userid=?";
+        String[] whereArgs = {String.valueOf(id)};
+
+        db.update("tb_userinfo",cv,whereClause, whereArgs);
+
+        db.close();
+        return false;
+    }
+
 
     public boolean queryAllById(int id){
         UserInfoDBHelper dbHelper = new UserInfoDBHelper(TableUserInfoActivity.this, "tb_userinfo", null, 1);

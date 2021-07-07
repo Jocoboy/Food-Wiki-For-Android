@@ -79,7 +79,7 @@ public class FileActivity extends AppCompatActivity {
         ContentValues cv = new ContentValues();
 
         if(setDefalutValue){
-            img = ConvertDrawableToBytes(R.drawable.figure_default);
+            img = ConvertDrawableToBytes(R.drawable.img_figure_default);
             cv.put("name", "默认头像");
             cv.put("extension", "png");
             cv.put("bin", img);

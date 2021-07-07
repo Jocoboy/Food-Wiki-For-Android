@@ -16,7 +16,7 @@
         android:id="@+id/content_view"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_login_background2">
+        android:background="@drawable/img_setting_background">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -25,7 +25,7 @@
             android:layout_marginLeft="8.0dip"
             android:layout_marginTop="@dimen/logo_margin_top"
             android:layout_marginRight="8.0dip"
-            android:src="@drawable/logo"
+            android:src="@drawable/ic_logo"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -70,7 +70,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
-                app:passwordToggleDrawable="@drawable/ic_password_visibility_selector"
+                app:passwordToggleDrawable="@drawable/selector_password_visibility"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="#50ffffff">
 
@@ -100,7 +100,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="8.0dip"
-            android:button="@drawable/remember_password_checkbox_selector"
+            android:button="@drawable/selector_password_checkbox_"
             android:checked="true"
             android:padding="8.0dip"
             android:text="@string/remember_password"
@@ -131,7 +131,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8.0dip"
             android:layout_marginRight="4dp"
-            android:background="@drawable/bg_btn_round_rect"
+            android:background="@drawable/shape_round_rect"
             android:minHeight="0.0dip"
             android:padding="8.0dip"
             android:text="@string/button_login"
