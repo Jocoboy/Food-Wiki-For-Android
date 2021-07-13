@@ -9,12 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
+
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.List;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -38,6 +43,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private int follows;
     private int followers;
     private int readers;
+
+    private List<String> mData;
+
 
 
     private boolean isFileTableEmpty = false;
@@ -65,6 +73,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         loadData();
         //processData();
+
+        initView();
     }
 
     @Override
@@ -155,5 +165,37 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         Bitmap figure_bmp = BitmapFactory.decodeByteArray(figure_bin, 0, figure_bin.length);
         iv_figure.setImageBitmap(figure_bmp);
 
+    }
+
+
+    public void initView(){
+        TabLayout tabLayout = findViewById(R.id.toolbar_tab);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+              @Override
+              public void onTabSelected(TabLayout.Tab tab) {
+                  setScrollViewContent();
+              }
+
+               @Override
+               public void onTabUnselected(TabLayout.Tab tab) {
+
+              }
+
+              @Override
+              public void onTabReselected(TabLayout.Tab tab) {
+
+              }
+        });
+        setScrollViewContent();
+    }
+
+    public void setScrollViewContent(){
+        LinearLayout layout = findViewById(R.id.ll_sc_content);
+        layout.removeAllViews();
+        for (int i = 0; i < /*mData.size()*/6; i++) {
+            View view = View.inflate(HomePageActivity.this, R.layout.item_layout, null);
+          //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+            layout.addView(view, i);
+        }
     }
 }
