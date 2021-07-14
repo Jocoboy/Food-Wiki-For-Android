@@ -18,7 +18,7 @@
             android:layout_height="280dp"
             android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/AppTheme"
-            app:contentScrim="#3F51B5"
+            app:contentScrim="#974CAF50"
             app:expandedTitleMarginEnd="48dp"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@style/AppTheme"
