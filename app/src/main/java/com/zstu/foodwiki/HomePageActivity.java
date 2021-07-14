@@ -6,16 +6,13 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -24,6 +21,12 @@ import java.util.List;
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static  final  String TAG = "TEST_HomePageActivity";
+    public static final int LATEST_FOOD = 0;
+    public static final int MY_FOLLOW = 1;
+    public static final int MY_STAR = 2;
+    public static final int MY_LIKE = 3;
+    public static final int MY_COMMENT = 4;
+
 
     TextView tv_name;
     TextView tv_uid;
@@ -173,7 +176,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
               @Override
               public void onTabSelected(TabLayout.Tab tab) {
-                  setScrollViewContent();
+                  int pos = tab.getPosition();
+                  setScrollViewContent(pos);
+
               }
 
                @Override
@@ -186,16 +191,55 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
               }
         });
-        setScrollViewContent();
+        setScrollViewContent(0);
     }
 
-    public void setScrollViewContent(){
+    public void setScrollViewContent(int pos){
         LinearLayout layout = findViewById(R.id.ll_sc_content);
         layout.removeAllViews();
-        for (int i = 0; i < /*mData.size()*/6; i++) {
-            View view = View.inflate(HomePageActivity.this, R.layout.item_layout, null);
-          //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
-            layout.addView(view, i);
+
+
+        switch (pos){
+            case LATEST_FOOD:
+                for (int i = 0; i < /*mData.size()*/3; i++) {
+                    View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
+                    //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+                    layout.addView(view, i);
+                }
+                break;
+            case MY_FOLLOW:
+                for (int i = 0; i < /*mData.size()*/2; i++) {
+                View view = View.inflate(HomePageActivity.this, R.layout.item_bloger, null);
+                //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+                layout.addView(view, i);
+            }
+                break;
+            case MY_STAR:
+                    for (int i = 0; i < /*mData.size()*/4; i++) {
+                        View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
+                        //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+                        layout.addView(view, i);
+                    }
+                break;
+            case MY_LIKE:
+                    for (int i = 0; i < /*mData.size()*/5; i++) {
+                        View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
+                        //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+                        layout.addView(view, i);
+                    }
+                break;
+            case MY_COMMENT:
+                for (int i = 0; i < /*mData.size()*/7; i++) {
+                    View view = View.inflate(HomePageActivity.this, R.layout.item_comment, null);
+                    //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+                    layout.addView(view, i);
+                }
+                break;
+            default:
+                break;
+
         }
+
+
     }
 }
