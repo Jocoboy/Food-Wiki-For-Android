@@ -36,6 +36,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     TextView tv_readers;
     ImageView iv_figure;
     ImageButton ibtn_setting;
+    ImageButton ibtn_publish;
 
     private  int userid;
     private int figureid;
@@ -114,6 +115,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 intent.putExtra("userid",userid);
                 startActivity(intent);
                 break;
+            case R.id.ibtn_publish:
+                Intent intent2 = new Intent(HomePageActivity.this,PublishPageActivity.class);
+                startActivity(intent2);
                 default:
                     break;
         }
@@ -129,10 +133,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         tv_readers = findViewById(R.id.tv_readers);
         iv_figure = findViewById(R.id.iv_figure);
         ibtn_setting = findViewById(R.id.ibtn_setting);
+        ibtn_publish = findViewById(R.id.ibtn_publish);
     }
 
     public void bindingEvents(){
+
         ibtn_setting.setOnClickListener(this);
+        ibtn_publish.setOnClickListener(this);
     }
 
     public void loadData(){
@@ -204,6 +211,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 for (int i = 0; i < /*mData.size()*/3; i++) {
                     View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
                     //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(HomePageActivity.this,DetailPageActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                     layout.addView(view, i);
                 }
                 break;

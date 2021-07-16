@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".RegisterActivity"
+    tools:context=".LoginActivity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:scrollbars="none"
@@ -16,7 +16,7 @@
         android:id="@+id/content_view"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/img_setting_background">
+        android:background="@drawable/img_login_background">
 
         <ImageView
             android:id="@+id/iv_logo"

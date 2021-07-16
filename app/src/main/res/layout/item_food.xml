@@ -119,14 +119,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/iv_like"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_like"
                     tools:ignore="ContentDescription"
                     android:layout_marginStart="56dp">
-                </ImageView>
+                </ImageButton>
 
                 <TextView
                     android:layout_width="40dp"
@@ -135,13 +135,13 @@
 
                 </TextView>
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/iv_star"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_star"
                     tools:ignore="ContentDescription">
-                </ImageView>
+                </ImageButton>
 
                 <TextView
                     android:layout_width="40dp"
@@ -150,13 +150,13 @@
 
                 </TextView>
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/iv_share"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_share"
                     tools:ignore="ContentDescription">
-                </ImageView>
+                </ImageButton>
 
                 <TextView
                     android:layout_width="40dp"
