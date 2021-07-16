@@ -35,6 +35,8 @@
         <activity android:name=".TableUserInfoActivity"></activity>
         <activity android:name=".HomePageActivity"></activity>
         <activity android:name=".SettingPageActivity"></activity>
+        <activity android:name=".PublishPageActivity"></activity>
+        <activity android:name=".DetailPageActivity"></activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

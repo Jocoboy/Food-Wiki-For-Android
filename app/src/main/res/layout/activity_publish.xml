@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".SettingPageActivity"
+    tools:context=".PublishPageActivity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:scrollbars="none"
@@ -16,21 +16,23 @@
         android:id="@+id/content_view"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/img_setting_background">
+        android:background="@drawable/img_publish_background">
 
         <ImageView
-            android:id="@+id/iv_space"
-            android:layout_width="@dimen/logo_width"
-            android:layout_height="@dimen/logo_height"
+            android:id="@+id/iv_space_publish"
+            android:layout_width="@dimen/food_width"
+            android:layout_height="@dimen/food_height"
             android:layout_marginLeft="8.0dip"
             android:layout_marginTop="@dimen/setting_margin_bottom"
             android:layout_marginRight="8.0dip"
+            android:layout_marginBottom="@dimen/setting_margin_bottom"
+            android:src="@drawable/img_food_default"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/llyt_setting"
+            android:id="@+id/llyt_publish"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28.0dip"
@@ -39,15 +41,15 @@
             android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_space">
+            app:layout_constraintTop_toBottomOf="@+id/iv_space_publish">
 
 
             <TextView
-                android:id="@+id/tv_petname"
+                android:id="@+id/tv_foodname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="@string/item_1">
+                android:text="@string/item2_1">
             </TextView>
 
 
@@ -59,11 +61,11 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_petname"
+                    android:id="@+id/et_foodname"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="8.0dip"
-                    android:hint="@string/item_1_default"
+                    android:hint="@string/item2_1_default"
                     android:imeOptions="actionNext"
                     android:inputType="textVisiblePassword"
                     android:lines="1"
@@ -77,11 +79,11 @@
 
 
             <TextView
-                android:id="@+id/tv_descripiton"
+                android:id="@+id/tv_contentdetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="@string/item_2">
+                android:text="@string/item2_2">
             </TextView>
 
 
@@ -93,13 +95,79 @@
 
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_descripiton"
+                    android:id="@+id/et_contentdetails"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="8.0dip"
-                    android:hint="@string/item_2_default"
+                    android:hint="@string/item2_2_default"
                     android:imeOptions="actionNext"
-                    android:inputType="textVisiblePassword"
+                    android:lines="5"
+                    android:maxLines="20"
+                    android:singleLine="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black_transparent" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/item2_3">
+            </TextView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false">
+
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_comment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8.0dip"
+                    android:hint="@string/item2_3_default"
+                    android:imeOptions="actionNext"
+                    android:lines="5"
+                    android:maxLines="10"
+                    android:singleLine="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black_transparent" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <TextView
+                android:id="@+id/tv_phonenumber_publish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/item2_4">
+            </TextView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false">
+
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_phonenumber_publish"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8.0dip"
+                    android:hint="@string/item2_4_default"
+                    android:imeOptions="actionNext"
                     android:lines="1"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -107,6 +175,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/black_transparent" />
             </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
 
 
@@ -114,7 +183,7 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_save"
+            android:id="@+id/btn_confirmpublish"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -123,11 +192,11 @@
             android:background="@drawable/shape_rect"
             android:minHeight="0.0dip"
             android:padding="8.0dip"
-            android:text="@string/button_save"
+            android:text="@string/button_publish"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
-            app:layout_constraintRight_toRightOf="@id/llyt_setting"
-            app:layout_constraintTop_toBottomOf="@id/llyt_setting" />
+            app:layout_constraintRight_toRightOf="@id/llyt_publish"
+            app:layout_constraintTop_toBottomOf="@id/llyt_publish" />
 
 
 

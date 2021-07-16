@@ -39,4 +39,15 @@
     <string name="item_2">个性签名</string>
     <string name="item_2_default">这家伙很懒，什么都没写~</string>
     <string name="button_save">保存修改</string>
+
+    <!-- PublishPage -->
+    <string name="item2_1">美食名称</string>
+    <string name="item2_1_default">请输入美食名称</string>
+    <string name="item2_2">内容详情</string>
+    <string name="item2_2_default">请输入内容详情</string>
+    <string name="item2_3">个人点评</string>
+    <string name="item2_3_default">请输入个人点评</string>
+    <string name="item2_4">联系方式</string>
+    <string name="item2_4_default">请输入联系方式</string>
+    <string name="button_publish">发布美食</string>
   </resources>
