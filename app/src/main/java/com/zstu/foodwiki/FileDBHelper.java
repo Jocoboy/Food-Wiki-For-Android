@@ -16,7 +16,15 @@ public class FileDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table tb_file(id integer primary key autoincrement,name varchar(50),extension varchar(20),bin blob,path varchar(100),descripiton varchar(200))";
+        String sql = "create table tb_file" +
+                "(" +
+                "id integer primary key autoincrement," +
+                "name varchar(50)," +
+                "extension varchar(20)," +
+                "bin blob," +
+                "path varchar(100)," +
+                "descripiton varchar(200)" +
+                ")";
         Log.i(TAG, "create Database------------->");
         db.execSQL(sql);
     }

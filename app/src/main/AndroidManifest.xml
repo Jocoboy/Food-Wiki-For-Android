@@ -31,8 +31,9 @@
         </activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".TableUserActivity"></activity>
-        <activity android:name=".FileActivity"></activity>
+        <activity android:name=".TableFileActivity"></activity>
         <activity android:name=".TableUserInfoActivity"></activity>
+        <activity android:name=".TableFoodActivity"></activity>
         <activity android:name=".HomePageActivity"></activity>
         <activity android:name=".SettingPageActivity"></activity>
         <activity android:name=".PublishPageActivity"></activity>

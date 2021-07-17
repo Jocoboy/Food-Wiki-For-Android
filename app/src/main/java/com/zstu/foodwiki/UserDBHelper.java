@@ -16,7 +16,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table tb_user(id integer primary key autoincrement,username varchar(50),password varchar(50))";
+        String sql = "create table tb_user" +
+                "(" +
+                "id integer primary key autoincrement," +
+                "username varchar(50),password varchar(50)" +
+                ")";
         Log.i(TAG, "create Database------------->");
         db.execSQL(sql);
     }
