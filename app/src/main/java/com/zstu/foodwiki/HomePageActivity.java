@@ -52,14 +52,24 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-    private boolean isFileTableEmpty = false;
+    private boolean isFigureEmpty = false;
+    private boolean isFoodEmpty = false;
 
-    public void InsertDegaultFigure(){
-        Intent intent = new Intent(HomePageActivity.this,FileActivity.class);
-        intent.putExtra("operation", FileActivity.INSERT);
+
+    public void InsertDefaultFigure(){
+        Intent intent = new Intent(HomePageActivity.this, TableFileActivity.class);
+        intent.putExtra("operation", TableFileActivity.INSERT_FIGURE);
         startActivity(intent);
         finish();
     }
+
+    public void InsertDefaultFood(){
+        Intent intent = new Intent(HomePageActivity.this, TableFileActivity.class);
+        intent.putExtra("operation", TableFileActivity.INSERT_FOOD);
+        startActivity(intent);
+        finish();
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,8 +80,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         bindingEvents();
 
         /*********A Small Trick Begin**********/
-        if(isFileTableEmpty){
-            InsertDegaultFigure();
+        if(isFigureEmpty){
+            InsertDefaultFigure();
+        }
+        if(isFoodEmpty){
+            InsertDefaultFood();
         }
         /*********A Small Trick End**********/
 
@@ -156,9 +169,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void processData(){
-        Intent intent = new Intent(HomePageActivity.this,FileActivity.class);
+        Intent intent = new Intent(HomePageActivity.this, TableFileActivity.class);
         intent.putExtra("figureid", figureid);
-        intent.putExtra("operation", FileActivity.GET_BIN);
+        intent.putExtra("operation", TableFileActivity.GET_BIN);
         startActivityForResult(intent, 2);
     }
 

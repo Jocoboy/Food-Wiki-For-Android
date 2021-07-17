@@ -14,11 +14,16 @@ import androidx.core.content.res.ResourcesCompat;
 
 import java.io.ByteArrayOutputStream;
 
-public class FileActivity extends AppCompatActivity {
+public class TableFileActivity extends AppCompatActivity {
 
 
-    public static final int INSERT = 1;
+    public static final int INSERT_FIGURE = 1;
     public static final int GET_BIN = 2;
+    public static final int INSERT_FOOD = 3;
+
+    public static final int TYPE_GENERAL= 200;
+    public static final int TYPE_FIGURE = 201;
+    public static final int TYPE_FOOD = 202;
 
     private  int pk_id;
     private String name;
@@ -36,9 +41,11 @@ public class FileActivity extends AppCompatActivity {
         int op = intent.getIntExtra("operation",0);
 
         switch (op) {
-            case INSERT:
-                insertFile(true);
-
+            case INSERT_FIGURE:
+                insertFile(TYPE_FIGURE);
+                break;
+            case INSERT_FOOD:
+                insertFile(TYPE_FOOD);
                 break;
             case GET_BIN:
                 int figureid = intent.getIntExtra("figureid",-1);
@@ -61,7 +68,7 @@ public class FileActivity extends AppCompatActivity {
     }
 
     public byte[] getBytes(int id){
-        FileDBHelper dbHelper = new FileDBHelper(FileActivity.this, "tb_file", null, 1);
+        FileDBHelper dbHelper = new FileDBHelper(TableFileActivity.this, "tb_file", null, 1);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query("tb_file", null, "id=?", new String[]{String.valueOf(id)}, null, null, null);
@@ -72,19 +79,27 @@ public class FileActivity extends AppCompatActivity {
         return bin;
     }
 
-    public long insertFile(boolean setDefalutValue){
-        FileDBHelper dbHelper = new FileDBHelper(FileActivity.this, "tb_file", null, 1);
+    public long insertFile(int type){
+        FileDBHelper dbHelper = new FileDBHelper(TableFileActivity.this, "tb_file", null, 1);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         ContentValues cv = new ContentValues();
 
-        if(setDefalutValue){
+        if(type == TYPE_FIGURE){
             img = ConvertDrawableToBytes(R.drawable.img_figure_default);
             cv.put("name", "默认头像");
             cv.put("extension", "png");
             cv.put("bin", img);
             cv.put("path", "null");
-            cv.put("descripiton", "用户初始头像");
+            cv.put("descripiton", "用户尚未上传个人头像，使用默认头像");
+        }
+        else if(type == TYPE_FOOD){
+            img = ConvertDrawableToBytes(R.drawable.img_food_default);
+            cv.put("name", "默认封面");
+            cv.put("extension", "png");
+            cv.put("bin", img);
+            cv.put("path", "null");
+            cv.put("descripiton", "用户尚未上传美食封面，使用默认封面");
         }
         else{
             cv.put("name", name);
