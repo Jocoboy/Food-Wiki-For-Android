@@ -105,7 +105,7 @@ create table tb_file(id integer primary key autoincrement,name varchar(50),exten
 
 create table tb_userinfo (id integer primary key autoincrement,userid integer,figureid integer,name varchar(50),follows int,followers int,readers int,remark varchar(200),foreign key(userid) references tb_user(id),foreign key(figureid) references tb_file(id));
 
-create table tb_food(id integer primary key autoincrement,fileid integer,title varchar(50),contentdetails varchar(1000),selfcomment varchar(300),phonenumber varchar(50),likes integer,stars integer,shares integer,reads integer,foreign key(fileid) references tb_file(id));
+create table tb_food(id integer primary key autoincrement,userid integer,fileid integer,title varchar(50),contentdetails varchar(1000),selfcomment varchar(300),phonenumber varchar(50),likes integer,stars integer,shares integer,reads integer,foreign key(userid) references tb_user(id),foreign key(fileid) references tb_file(id));
 ```
 
 

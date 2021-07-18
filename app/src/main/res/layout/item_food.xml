@@ -129,6 +129,7 @@
                 </ImageButton>
 
                 <TextView
+                    android:id="@+id/tv_like"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:text="20">
@@ -144,6 +145,7 @@
                 </ImageButton>
 
                 <TextView
+                    android:id="@+id/tv_star"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:text="20">
@@ -159,6 +161,7 @@
                 </ImageButton>
 
                 <TextView
+                    android:id="@+id/tv_share"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:text="20">
