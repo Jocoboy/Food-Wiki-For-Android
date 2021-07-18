@@ -21,6 +21,7 @@ public class FoodDBHelper extends SQLiteOpenHelper {
         String sql = "create table tb_food" +
                 "(" +
                 "id integer primary key autoincrement," +
+                "userid integer,"+
                 "fileid integer," +
                 "title varchar(50)," +
                 "contentdetails varchar(1000)," +
@@ -30,6 +31,7 @@ public class FoodDBHelper extends SQLiteOpenHelper {
                 "stars integer," +
                 "shares integer," +
                 "reads integer," +
+                "foreign key(userid) references tb_user(id),"+
                 "foreign key(fileid) references tb_file(id)" +
                 ")";
         Log.i(TAG, "create Database------------->");

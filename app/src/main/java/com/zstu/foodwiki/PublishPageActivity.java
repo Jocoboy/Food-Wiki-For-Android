@@ -19,6 +19,7 @@ public class PublishPageActivity extends AppCompatActivity implements View.OnCli
     EditText et_comment;
     EditText et_phone;
 
+    private int user_id;
     private String title;
     private String content_details;
     private String self_comment;
@@ -30,6 +31,9 @@ public class PublishPageActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
+
+        Intent intent = getIntent();
+        user_id = intent.getIntExtra("userid",0);
 
         getId();
         bindingEvents();
@@ -55,9 +59,9 @@ public class PublishPageActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()){
             case R.id.btn_confirmpublish:
                 if(getPublishInfo()){
-
                     Intent intent = new Intent(PublishPageActivity.this,TableFoodActivity.class);
                     intent.putExtra("operation", TableFoodActivity.INSERT);
+                    intent.putExtra("userid", user_id);
                     intent.putExtra("title",title);
                     intent.putExtra("contentdetails", content_details);
                     intent.putExtra("selfcomment", self_comment);

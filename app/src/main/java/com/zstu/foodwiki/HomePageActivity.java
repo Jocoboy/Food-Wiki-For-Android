@@ -48,8 +48,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private int followers;
     private int readers;
 
-    private List<String> mData;
-
+    private List<FoodEntity> mData;
+    private int mData_current_pos;
 
 
     private boolean isFigureEmpty = false;
@@ -91,7 +91,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         loadData();
         //processData();
 
-        initView();
+
     }
 
     @Override
@@ -110,13 +110,64 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     Log.d(TAG, "figureid --->> "+figureid);
                     processData();
                    //renderPage();
+
                 }
+
             case 2:
                 if(resultCode==300){
                     figure_bin = data.getByteArrayExtra("figure_bin");
                     renderPage();
+
                 }
 
+            case 3:
+                if(resultCode == 130){
+                    mData = (List<FoodEntity>)data.getSerializableExtra("objectList");
+
+                   /***************访问数据库：加载美食推送信息(推送者)***************/
+                    for(int i = 0 ; i < mData.size(); i++){
+                        mData_current_pos = i;
+                        int userid = mData.get(mData_current_pos).getFk_user_id();
+                        // mData.get(mData_current_pos).setBloger(userid+"");
+                        Intent intent4 = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
+                        intent4.putExtra("userid", userid);
+                        intent4.putExtra("operation", TableUserInfoActivity.GET_ALL);
+                        startActivityForResult(intent4,4);
+
+                    }
+
+                    /***************访问数据库：加载美食推送信息(美食封面)***************/
+                    for(int i = 0 ; i < mData.size(); i++){
+                        mData_current_pos = i;
+                        int fileid = mData.get(mData_current_pos).getFk_file_id();
+                        Intent intent5 = new Intent(HomePageActivity.this,TableFileActivity.class);
+                        intent5.putExtra("figureid", fileid);
+                        intent5.putExtra("operation", TableFileActivity.GET_BIN);
+                        startActivityForResult(intent5,5);
+
+                    }
+
+                    initView();
+
+                    //Log.d(TAG, "mData size  --->> "+mData.size());
+                }
+
+            case 4:
+                if(resultCode==290){
+                    String mData_bloger= data.getStringExtra("name");
+                    mData.get(mData_current_pos).setBloger(mData_bloger);
+
+                    //  mData_username = "???";
+                }
+
+            case 5:
+                if(resultCode==300){
+                    byte[] mData_food = data.getByteArrayExtra("figure_bin");
+                    mData.get(mData_current_pos).setFoodbin(mData_food);
+                   /* if(mData_current_pos==mData.size()){
+                        initView();
+                    }*/
+                }
         }
     }
 
@@ -130,6 +181,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.ibtn_publish:
                 Intent intent2 = new Intent(HomePageActivity.this,PublishPageActivity.class);
+                intent2.putExtra("userid", userid);
                 startActivity(intent2);
                 default:
                     break;
@@ -160,10 +212,18 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         userid = intent.getIntExtra("userid",0);
         username = intent.getStringExtra("username");
 
+        /*************访问数据库：加载用户信息**************/
         Intent intent2 = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
         intent2.putExtra("userid", userid);
         intent2.putExtra("operation", 1);
         startActivityForResult(intent2,1);
+
+        /*************访问数据库：加载美食推送信息**************/
+        Intent intent3 = new Intent(HomePageActivity.this,TableFoodActivity.class);
+        intent3.putExtra("count", 20);
+        intent3.putExtra("operation", TableFoodActivity.QUERY_ALL);
+        startActivityForResult(intent3, 3);
+
 
 
     }
@@ -193,6 +253,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     public void initView(){
         TabLayout tabLayout = findViewById(R.id.toolbar_tab);
+
+
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
               @Override
               public void onTabSelected(TabLayout.Tab tab) {
@@ -221,9 +284,24 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         switch (pos){
             case LATEST_FOOD:
-                for (int i = 0; i < /*mData.size()*/3; i++) {
+                for (int i = 0; i < mData.size(); i++) {
                     View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
-                    //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+
+                   /* byte[] food_bin = mData.get(i).getFoodbin();
+                    Bitmap food_bmp = BitmapFactory.decodeByteArray(food_bin, 0, food_bin.length);
+                    ((ImageView) view.findViewById(R.id.iv_food)).setImageBitmap(food_bmp);*/
+
+                    ((TextView) view.findViewById(R.id.tv_bloger)).setText(mData.get(i).getBloger());
+
+                    ((TextView) view.findViewById(R.id.tv_title)).setText(mData.get(i).getTitle());
+                    ((TextView) view.findViewById(R.id.tv_content)).setText('"'+mData.get(i).getSelfcomment()+'"');
+                    ((TextView) view.findViewById(R.id.tv_phonenumber)).setText(mData.get(i).getPhonenumber());
+                    ((TextView) view.findViewById(R.id.tv_like)).setText(mData.get(i).getLikes()+"");
+                    ((TextView) view.findViewById(R.id.tv_share)).setText(mData.get(i).getShares()+"");
+                    ((TextView) view.findViewById(R.id.tv_star)).setText(mData.get(i).getStars()+"");
+
+
+
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

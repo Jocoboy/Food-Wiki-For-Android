@@ -67,7 +67,7 @@ public class TableFileActivity extends AppCompatActivity {
         return baos.toByteArray();
     }
 
-    public byte[] getBytes(int id){
+    public byte[] getBytes(long id){
         FileDBHelper dbHelper = new FileDBHelper(TableFileActivity.this, "tb_file", null, 1);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 

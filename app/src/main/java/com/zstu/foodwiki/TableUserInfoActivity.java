@@ -72,6 +72,7 @@ public class TableUserInfoActivity extends AppCompatActivity {
         }
     }
 
+
     public void insertUserInfo(boolean setDefalutValue){
 
         System.out.println("InsertUserInfo function called!!!!!!!");
