@@ -6,6 +6,7 @@ public class FoodEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**********Base Var*************/
     private int pk_food_id;
     private int fk_user_id;
     private int fk_file_id;
@@ -19,8 +20,12 @@ public class FoodEntity implements Serializable {
     private int shares;
     private int reads;
 
-    private String bloger;
+
+    /**********Extend Var***************/
     private byte[] foodbin;
+    private UserEntity userEntity;
+   // private String bloger;
+
 
 
     public FoodEntity(int pk_food_id, int fk_user_id, int fk_file_id, String title, String contentdetails, String selfcomment, String phonenumber, int likes, int stars, int shares, int reads) {
@@ -35,6 +40,14 @@ public class FoodEntity implements Serializable {
         this.stars = stars;
         this.shares = shares;
         this.reads = reads;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public int getPk_food_id() {
@@ -125,13 +138,13 @@ public class FoodEntity implements Serializable {
         this.reads = reads;
     }
 
-    public String getBloger() {
+   /* public String getBloger() {
         return bloger;
     }
 
     public void setBloger(String bloger) {
         this.bloger = bloger;
-    }
+    }*/
 
     public byte[] getFoodbin() {
         return foodbin;

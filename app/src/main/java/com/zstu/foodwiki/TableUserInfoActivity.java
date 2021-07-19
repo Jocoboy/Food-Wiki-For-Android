@@ -48,6 +48,7 @@ public class TableUserInfoActivity extends AppCompatActivity {
                     intent1.putExtra("readers", readers);
                     intent1.putExtra("remark", remark);
                     intent1.putExtra("figureid", figureid);
+                    intent1.putExtra("userid", userid);
                     setResult(290,intent1);
                     finish();
                 }
