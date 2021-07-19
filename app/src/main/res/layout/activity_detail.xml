@@ -54,7 +54,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_readers"
+                android:id="@+id/tv_reads"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="120"
@@ -291,6 +291,7 @@
                 </ImageButton>
 
                 <TextView
+                    android:id="@+id/tv_like_detail"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:text="20">
@@ -306,6 +307,7 @@
                 </ImageButton>
 
                 <TextView
+                    android:id="@+id/tv_star_detail"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:text="20">
@@ -321,6 +323,7 @@
                 </ImageButton>
 
                 <TextView
+                    android:id="@+id/tv_share_details"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:text="20">
