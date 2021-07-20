@@ -5,22 +5,25 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class UserDBHelper extends SQLiteOpenHelper {
+public class FoodStarDBHelper extends SQLiteOpenHelper {
 
-    private  static final  String TAG = "UserSQLite";
+    private  static final  String TAG = "FoodStarSQLite";
     public static final  int VERSION = 1;
 
-    public UserDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+
+    public FoodStarDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table tb_user" +
+        String sql = "create table tb_foodstar" +
                 "(" +
                 "id integer primary key autoincrement," +
-                "username varchar(50)," +
-                "password varchar(50)" +
+                "userid integer," +
+                "foodid integer,"+
+                "foreign key(userid) references tb_user(id),"+
+                "foreign key(foodid) references tb_food(id)"+
                 ")";
         Log.i(TAG, "create Database------------->");
         db.execSQL(sql);
