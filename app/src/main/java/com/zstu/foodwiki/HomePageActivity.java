@@ -52,7 +52,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private int readers;
 
     private List<FoodEntity> mData;
-    private int mData_current_pos;
+    private List<FoodLikeEntity> mLikeData;
+    private List<FoodStarEntity> mStarData;
+   // private int mData_current_pos;
     //private List<UserEntity> nData;
    // private int nData_current_pos;
 
@@ -417,16 +419,66 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             }
                 break;
             case MY_STAR:
-                    for (int i = 0; i < /*mData.size()*/4; i++) {
+                    for (int i = 0; i < mStarData.size(); i++) {
+                        final int index = i;
+
                         View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
-                        //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+
+                        ((TextView) view.findViewById(R.id.tv_bloger)).setText(mStarData.get(i).getFoodEntity().getUserEntity().getName());
+
+                        byte[] food_bin = mStarData.get(i).getFoodEntity().getFoodbin();
+                        Bitmap food_bmp = BitmapFactory.decodeByteArray(food_bin, 0, food_bin.length);
+                        ((ImageView) view.findViewById(R.id.iv_food)).setImageBitmap(food_bmp);
+
+                        ((TextView) view.findViewById(R.id.tv_title)).setText(mStarData.get(i).getFoodEntity().getTitle());
+                        ((TextView) view.findViewById(R.id.tv_content)).setText('"'+mStarData.get(i).getFoodEntity().getSelfcomment()+'"');
+                        ((TextView) view.findViewById(R.id.tv_phonenumber)).setText(mStarData.get(i).getFoodEntity().getPhonenumber());
+                        ((TextView) view.findViewById(R.id.tv_like)).setText(mStarData.get(i).getFoodEntity().getLikes()+"");
+                        ((TextView) view.findViewById(R.id.tv_share)).setText(mStarData.get(i).getFoodEntity().getShares()+"");
+                        ((TextView) view.findViewById(R.id.tv_star)).setText(mStarData.get(i).getFoodEntity().getStars()+"");
+
+
+
+                        view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(HomePageActivity.this,DetailPageActivity.class);
+                                intent.putExtra("foodEntity", (Serializable) mLikeData.get(index).getFoodEntity());
+                                startActivity(intent);
+                            }
+                        });
                         layout.addView(view, i);
                     }
                 break;
             case MY_LIKE:
-                    for (int i = 0; i < /*mData.size()*/5; i++) {
+                    for (int i = 0; i < mLikeData.size(); i++) {
+                        final int index = i;
+
                         View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
-                        //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+
+                        ((TextView) view.findViewById(R.id.tv_bloger)).setText(mLikeData.get(i).getFoodEntity().getUserEntity().getName());
+
+                        byte[] food_bin = mLikeData.get(i).getFoodEntity().getFoodbin();
+                        Bitmap food_bmp = BitmapFactory.decodeByteArray(food_bin, 0, food_bin.length);
+                        ((ImageView) view.findViewById(R.id.iv_food)).setImageBitmap(food_bmp);
+
+                        ((TextView) view.findViewById(R.id.tv_title)).setText(mLikeData.get(i).getFoodEntity().getTitle());
+                        ((TextView) view.findViewById(R.id.tv_content)).setText('"'+mLikeData.get(i).getFoodEntity().getSelfcomment()+'"');
+                        ((TextView) view.findViewById(R.id.tv_phonenumber)).setText(mLikeData.get(i).getFoodEntity().getPhonenumber());
+                        ((TextView) view.findViewById(R.id.tv_like)).setText(mLikeData.get(i).getFoodEntity().getLikes()+"");
+                        ((TextView) view.findViewById(R.id.tv_share)).setText(mLikeData.get(i).getFoodEntity().getShares()+"");
+                        ((TextView) view.findViewById(R.id.tv_star)).setText(mLikeData.get(i).getFoodEntity().getStars()+"");
+
+
+
+                        view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(HomePageActivity.this,DetailPageActivity.class);
+                                intent.putExtra("foodEntity", (Serializable) mLikeData.get(index).getFoodEntity());
+                                startActivity(intent);
+                            }
+                        });
                         layout.addView(view, i);
                     }
                 break;
