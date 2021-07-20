@@ -65,7 +65,7 @@ public class DetailPageActivity extends AppCompatActivity implements View.OnClic
         tv_follows.setText(currentUserEntity.getFollows()+"");
         tv_followers.setText(currentUserEntity.getFollowers()+"");
         byte[] figure_bin = currentUserEntity.getFigurebin();
-       // iv_figure.setImageBitmap(BitmapFactory.decodeByteArray(figure_bin, 0, figure_bin.length));
+        iv_figure.setImageBitmap(BitmapFactory.decodeByteArray(figure_bin, 0, figure_bin.length));
     }
 
     @Override

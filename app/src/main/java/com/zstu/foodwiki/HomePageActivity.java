@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -91,8 +92,23 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
         /*********A Small Trick End**********/
 
-        loadData();
+        //loadData();
         //processData();
+
+        Intent intent = getIntent();
+        userid = intent.getIntExtra("userid",0);
+        username = intent.getStringExtra("username");
+
+        updateData(1);
+        //updateData(2);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        updateData(3);
 
 
     }
@@ -111,35 +127,30 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     figureid = data.getIntExtra("figureid", -1);
                    // System.out.println("onActivityResult -- name: "+ name);
                     Log.d(TAG, "figureid --->> "+figureid);
+
                     updateData(2);
                    // processData();
                    //renderPage();
 
                 }
-
+                break;
             case 2:
                 if(resultCode==300){
                     figure_bin = data.getByteArrayExtra("figure_bin");
                     renderPage();
-
                 }
-
+                break;
             case 3:
                 if(resultCode == 130){
                     mData = (List<FoodEntity>)data.getSerializableExtra("objectList");
 
-
                     updateData(4);
-
                     updateData(5);
 
-
-
-                    initView();
-
                     //Log.d(TAG, "mData size  --->> "+mData.size());
-                }
 
+                }
+                break;
             case 4:
                 if(resultCode==290){
                     /*String mData_bloger= data.getStringExtra("name");
@@ -153,32 +164,48 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     int followers = data.getIntExtra("followers", -1);
                     int readers = data.getIntExtra("readers", -1);
 
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+
                     UserEntity userEntity = new UserEntity(userid,figureid,name,remark,follows,followers,readers);
 
+                    mData.get(pos).setUserEntity(userEntity);
 
-                    mData.get(mData_current_pos).setUserEntity(userEntity);
+                    Intent intent6 = new Intent(HomePageActivity.this,TableFileActivity.class);
+                    intent6.putExtra("figureid", figureid);
+                    intent6.putExtra("operation", TableFileActivity.GET_BIN);
+                    intent6.putExtra("mData_current_pos", pos);
+                    startActivityForResult(intent6,6);
 
 
-                    if(mData_current_pos == mData.size() - 1  ){
-                        updateData(6);
+                    if(pos == mData.size() - 1  ){
+                        //Toast.makeText(this, "用户名 "+mData.get(mData_current_pos-1).getUserEntity().getName() +"mData size " + mData.size(), Toast.LENGTH_SHORT).show();
+                       // initTabView();
+                      // updateData(6);
                     }
                     //  mData_username = "???";
                 }
-
+                break;
             case 5:
                 if(resultCode==300){
                     byte[] mData_food = data.getByteArrayExtra("figure_bin");
-                    mData.get(mData_current_pos).setFoodbin(mData_food);
-                   /* if(mData_current_pos==mData.size()){
-                        initView();
-                    }*/
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+                    mData.get(pos).setFoodbin(mData_food);
+                    if(pos == mData.size() - 1 ){
+                       // updateData(6);
+                      //initTabView();
+                    }
                 }
-
+                break;
             case 6:
                 if(resultCode==300){
                     byte[] mData_figure = data.getByteArrayExtra("figure_bin");
-                    mData.get(mData_current_pos).getUserEntity().setFigurebin(mData_figure);
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+                    mData.get(pos).getUserEntity().setFigurebin(mData_figure);
+                    if(pos == mData.size() - 1 ){
+                        initTabView();
+                    }
                 }
+                break;
         }
     }
 
@@ -221,73 +248,74 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
     public void loadData(){
-        Intent intent = getIntent();
-        userid = intent.getIntExtra("userid",0);
-        username = intent.getStringExtra("username");
 
-        updateData(1);
-
-        updateData(3);
     }
 
     public void updateData(int requestCode){
         switch (requestCode){
             case 1:
-                /*************访问数据库：加载用户信息**************/
+                /*************访问数据库：加载用户基本信息**************/
                 Intent intent = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
                 intent.putExtra("userid", userid);
                 intent.putExtra("operation", 1);
                 startActivityForResult(intent,requestCode);
                 break;
             case 2:
+                /*************访问数据库：加载用户级联信息（用户头像）**************/
                 Intent intent2 = new Intent(HomePageActivity.this, TableFileActivity.class);
                 intent2.putExtra("figureid", figureid);
                 intent2.putExtra("operation", TableFileActivity.GET_BIN);
                 startActivityForResult(intent2, requestCode);
                 break;
             case 3:
-                /*************访问数据库：加载美食推送信息**************/
+                /*************访问数据库：加载美食推送基本信息**************/
                 Intent intent3 = new Intent(HomePageActivity.this,TableFoodActivity.class);
                 intent3.putExtra("count", 20);
                 intent3.putExtra("operation", TableFoodActivity.QUERY_ALL);
                 startActivityForResult(intent3, requestCode);
                 break;
             case 4:
-                /***************访问数据库：加载美食推送信息(推送者)***************/
+                /***************访问数据库：加载美食推送级联信息(推送者)***************/
                 for(int i = 0 ; i < mData.size(); i++){
-                    mData_current_pos = i;
-                    int userid = mData.get(mData_current_pos).getFk_user_id();
+                  //  mData_current_pos = i;
+                    int userid = mData.get(i).getFk_user_id();
                     // mData.get(mData_current_pos).setBloger(userid+"");
                     Intent intent4 = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
                     intent4.putExtra("userid", userid);
                     intent4.putExtra("operation", TableUserInfoActivity.GET_ALL);
+                    intent4.putExtra("mData_current_pos", i);
                     startActivityForResult(intent4,requestCode);
 
                 }
                 break;
             case 5:
-                /***************访问数据库：加载美食推送信息(美食封面)***************/
+                /***************访问数据库：加载美食推送级联信息(美食封面)***************/
                 for(int i = 0 ; i < mData.size(); i++){
-                    mData_current_pos = i;
-                    int fileid = mData.get(mData_current_pos).getFk_file_id();
+                   // mData_current_pos = i;
+                    int fileid = mData.get(i).getFk_file_id();
                     Intent intent5 = new Intent(HomePageActivity.this,TableFileActivity.class);
                     intent5.putExtra("figureid", fileid);
                     intent5.putExtra("operation", TableFileActivity.GET_BIN);
+                    intent5.putExtra("mData_current_pos", i);
                     startActivityForResult(intent5,requestCode);
 
                 }
                 break;
-            case 6:
-                for(int i = 0 ; i < mData.size(); i++){
-                    mData_current_pos = i;
-                    int fileid = mData.get(mData_current_pos).getUserEntity().getFk_figure_id();
+/*            case 6:
+                /***************访问数据库：加载美食详情信息(推送者头像)***************/
+ /*               for(int i = 0 ; i < mData.size(); i++){
+                    //mData_current_pos = i;
+                    int fileid = mData.get(i).getUserEntity().getFk_figure_id();
                     Intent intent6 = new Intent(HomePageActivity.this,TableFileActivity.class);
                     intent6.putExtra("figureid", fileid);
                     intent6.putExtra("operation", TableFileActivity.GET_BIN);
+                    intent6.putExtra("mData_current_pos", i);
                     startActivityForResult(intent6,requestCode);
 
                 }
+
                 break;
+*/
                 default:
                     break;
         }
@@ -315,7 +343,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    public void initView(){
+    public void initTabView(){
         TabLayout tabLayout = findViewById(R.id.toolbar_tab);
 
 
@@ -323,6 +351,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
               @Override
               public void onTabSelected(TabLayout.Tab tab) {
+                  //updateData(3);
                   int pos = tab.getPosition();
                   setScrollViewContent(pos);
 
@@ -338,6 +367,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
               }
         });
+
         //setScrollViewContent(0);
     }
 
@@ -349,13 +379,15 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         switch (pos){
             case LATEST_FOOD:
                 for (int i = 0; i < mData.size(); i++) {
+                    final int index = i;
+
                     View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
 
-                    byte[] food_bin = mData.get(i).getFoodbin();
+                   ((TextView) view.findViewById(R.id.tv_bloger)).setText(mData.get(i).getUserEntity().getName());
+
+                   byte[] food_bin = mData.get(i).getFoodbin();
                     Bitmap food_bmp = BitmapFactory.decodeByteArray(food_bin, 0, food_bin.length);
                     ((ImageView) view.findViewById(R.id.iv_food)).setImageBitmap(food_bmp);
-
-                    ((TextView) view.findViewById(R.id.tv_bloger)).setText(mData.get(i).getUserEntity().getName());
 
                     ((TextView) view.findViewById(R.id.tv_title)).setText(mData.get(i).getTitle());
                     ((TextView) view.findViewById(R.id.tv_content)).setText('"'+mData.get(i).getSelfcomment()+'"');
@@ -364,7 +396,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     ((TextView) view.findViewById(R.id.tv_share)).setText(mData.get(i).getShares()+"");
                     ((TextView) view.findViewById(R.id.tv_star)).setText(mData.get(i).getStars()+"");
 
-                    final int index = i;
+
 
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
