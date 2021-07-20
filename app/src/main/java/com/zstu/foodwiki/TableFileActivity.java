@@ -49,9 +49,13 @@ public class TableFileActivity extends AppCompatActivity {
                 break;
             case GET_BIN:
                 int figureid = intent.getIntExtra("figureid",-1);
+                int pos = intent.getIntExtra("mData_current_pos",-1);
                 byte[] figure_bin = getBytes(figureid);
                 Intent intent1 = new Intent();
                 intent1.putExtra("figure_bin", figure_bin);
+                if(pos!=-1){
+                    intent1.putExtra("mData_current_pos", pos);
+                }
                 setResult(300, intent1);
                 finish();
                 break;

@@ -17,7 +17,7 @@
                 android:id="@+id/iv_bloger"
                 android:layout_width="120dp"
                 android:layout_height="160dp"
-                android:src="@drawable/img_figure_default"
+                android:src="@drawable/img_figure_boy"
                 tools:ignore="ContentDescription">
             </ImageView>
 

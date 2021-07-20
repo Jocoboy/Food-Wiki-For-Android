@@ -40,6 +40,7 @@ public class TableUserInfoActivity extends AppCompatActivity {
         switch (op){
             case GET_ALL:
                 userid = intent.getIntExtra("userid",0);
+                int pos = intent.getIntExtra("mData_current_pos",-1);
                 if(queryAllById(userid)){
                     Intent intent1 = new Intent();
                     intent1.putExtra("name", name);
@@ -49,6 +50,9 @@ public class TableUserInfoActivity extends AppCompatActivity {
                     intent1.putExtra("remark", remark);
                     intent1.putExtra("figureid", figureid);
                     intent1.putExtra("userid", userid);
+                    if(pos!=-1){
+                        intent1.putExtra("mData_current_pos", pos);
+                    }
                     setResult(290,intent1);
                     finish();
                 }
