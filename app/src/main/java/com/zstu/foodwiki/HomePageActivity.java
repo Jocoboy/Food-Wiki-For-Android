@@ -60,6 +60,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     private boolean isFigureEmpty = false;
     private boolean isFoodEmpty = false;
+    private boolean isAssist = false;
 
 
     public void InsertDefaultFigure(){
@@ -72,6 +73,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     public void InsertDefaultFood(){
         Intent intent = new Intent(HomePageActivity.this, TableFileActivity.class);
         intent.putExtra("operation", TableFileActivity.INSERT_FOOD);
+        startActivity(intent);
+        finish();
+    }
+
+    public void InsertGeneral(){
+        Intent intent = new Intent(HomePageActivity.this, TableFileActivity.class);
+        intent.putExtra("operation", TableFileActivity.INSERT_GENERAL);
         startActivity(intent);
         finish();
     }
@@ -91,6 +99,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
         if(isFoodEmpty){
             InsertDefaultFood();
+        }
+        if(isAssist){
+            InsertGeneral();
         }
         /*********A Small Trick End**********/
 
@@ -419,7 +430,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             }
                 break;
             case MY_STAR:
-                    for (int i = 0; i < mStarData.size(); i++) {
+                    /*for (int i = 0; i < mStarData.size(); i++) {
                         final int index = i;
 
                         View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
@@ -449,9 +460,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                         });
                         layout.addView(view, i);
                     }
-                break;
+                break;*/
             case MY_LIKE:
-                    for (int i = 0; i < mLikeData.size(); i++) {
+                    /*for (int i = 0; i < mLikeData.size(); i++) {
                         final int index = i;
 
                         View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
@@ -481,7 +492,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                         });
                         layout.addView(view, i);
                     }
-                break;
+                break;*/
             case MY_COMMENT:
                 for (int i = 0; i < /*mData.size()*/7; i++) {
                     View view = View.inflate(HomePageActivity.this, R.layout.item_comment, null);

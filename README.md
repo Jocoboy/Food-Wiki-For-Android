@@ -98,6 +98,8 @@ h --> UC10
 
 ![物理模型](documents\物理模型.png)
 
+#### Structure
+
 ```sql
 create table tb_user(id integer primary key autoincrement,username varchar(50),password varchar(50));
 
@@ -110,6 +112,62 @@ create table tb_food(id integer primary key autoincrement,userid integer,fileid 
 create table tb_foodlike(id integer primary key autoincrement,userid integer,foodid integer,foreign key(userid) references tb_user(id),foreign key(foodid) references tb_food(id));
 
 create table tb_foodstar(id integer primary key autoincrement,userid integer,foodid integer,foreign key(userid) references tb_user(id),foreign key(foodid) references tb_food(id));
+```
+
+#### Data
+
+```sql
+/****tb_user*****/
+insert into tb_user(id,username,password) values(1,'123@qq.com','123');
+insert into tb_user(id,username,password) values(2,'jocoboy@outlook.com','jocoboy');
+insert into tb_user(id,username,password) values(3,'2959@sina.cn','2959');
+insert into tb_user(id,username,password) values(4,'12315@weixin.xyz','12315');
+
+/****tb_file*****/
+insert into tb_file(id,name,extension,descripiton)
+values(1,'默认头像','png','用户尚未上传个人头像，使用默认头像');
+insert into tb_file(id,name,extension,descripiton)
+values(2,'默认封面','png','用户尚未上传美食封面，使用默认封面');
+insert into tb_file(id,name,extension,descripiton)
+values(3,'纽西兰羊排','jpg','用户上传美食封面之一');
+insert into tb_file(id,name,extension,descripiton)
+values(4,'果木烤澳洲谷饲牛扒','jpg','用户上传美食封面之一');
+insert into tb_file(id,name,extension,descripiton)
+values(5,'海鲜烩番茄意大利面','jpg','用户上传美食封面之一');
+insert into tb_file(id,name,extension,descripiton)
+values(6,'西班牙天然原味肠','jpg','用户上传美食封面之一');
+insert into tb_file(id,name,extension,descripiton)
+values(7,'西班牙海鲜饭','jpg','用户上传美食封面之一');
+insert into tb_file(id,name,extension,descripiton)
+values(8,'个人头像1','jpg','用户上传美个人头像之一');
+insert into tb_file(id,name,extension,descripiton)
+values(9,'个人头像2','jpg','用户上传美个人头像之一');
+insert into tb_file(id,name,extension,descripiton)
+values(10,'个人头像3','jpg','用户上传美个人头像之一');
+insert into tb_file(id,name,extension,descripiton)
+values(11,'个人头像4','jpg','用户上传美个人头像之一');
+
+/****tb_userinfo*****/
+insert into tb_userinfo(id,userid,figureid,name,follows,followers,readers,remark)
+values(1,1,8,'草莓派qs',0,0,0,'这家伙很懒，什么都没写~');
+insert into tb_userinfo(id,userid,figureid,name,follows,followers,readers,remark)
+values(2,2,9,'鸡腿ovo',0,0,0,'这家伙很懒，什么都没写~');
+insert into tb_userinfo(id,userid,figureid,name,follows,followers,readers,remark)
+values(3,3,10,'冰激凌dw',0,0,0,'这家伙很懒，什么都没写~');
+insert into tb_userinfo(id,userid,figureid,name,follows,followers,readers,remark)
+values(4,4,11,'包子os',0,0,0,'这家伙很懒，什么都没写~');
+
+/****tb_food*****/
+insert into tb_food(id,userid,fileid,title,contentdetails,selfcomment,phonenumber,likes,stars,shares,reads)
+values(1,1,3,'纽西兰羊排','中国北方俗称的新西兰羊排（英文FLAPS)是带骨羊后胸部分-第5根肋骨至第12根肋骨和羊腩-第13根肋骨至后退根部的总称。在新西兰屠宰加工厂，带骨羊后胸部分和羊腩一般是整块分割下来，也有的是分开切割的。所以就有了俗称的整片羊排和断排。根据绵羊是否长出切齿，有羔羊（LAMB)的大羊(MUTTON)之分，有时中间又分出一档，称之为青年羊。羔羊年龄一般在12个月以下，无切齿，肉无膻味；青年羊在1-2年，2-4个切齿，味略膻；大羊为1年或2年以上，味膻。','新西兰盛产牛羊肉，且肉质鲜美，本身鲜嫩入味，加上配菜酱汁的装点，这果木烤羊排，绝对不容错过！','+86 15348850154',0,0,0,0);
+insert into tb_food(id,userid,fileid,title,contentdetails,selfcomment,phonenumber,likes,stars,shares,reads)
+values(2,1,4,'果木烤澳洲谷饲牛扒','澳洲谷饲牛肉，是指以谷物饲养至少一百天的肉牛。营养均衡且高能量的谷物饲料，通常包括大麦、小麦、燕麦、高粱、玉米等。谷饲牛养成期相对较短，肉质柔软，脂肪量较高，口感更加细嫩美味，在全球都饱负盛名。','这家店才开一个月,果木烤澳洲雪花牛扒就狂卖3000+份!每周进口的澳洲谷饲牛扒,荔枝木现点现烤。作为食肉兽,我已经无法冷静面对它了...','+86 14765690125',0,0,0,0);
+insert into tb_food(id,userid,fileid,title,contentdetails,selfcomment,phonenumber,likes,stars,shares,reads)
+values(3,2,5,'海鲜烩番茄意大利面','意大利本身就是一个以美食著称的国家，而意面和披萨堪称意大利美食的标志，意粉煮的软韧，酱汁酸甜度刚好，广受各国人民的喜爱。','前阵子去西餐厅点了一份意大利面，花了58块，虽然贵但是味道还不错，回家后还意犹未尽!','+86 18765623105',0,0,0,0);
+insert into tb_food(id,userid,fileid,title,contentdetails,selfcomment,phonenumber,likes,stars,shares,reads)
+values(4,3,6,'西班牙天然原味肠','西班牙人在吃一些风干切片的香肠时,会把外面那一层肠衣撕下来。咱们国内那么多风肠熏肠腊肠,煮熟切片吃的时候,从来没有剥皮的习惯。','西班牙原味肠蘸着初榨橄榄油送入口中，有种舌尖烟花绽放的快感。入口滋味甘甜诱人，细腻的油脂像雪花一般融化在舌头上，满口回香，令人难忘。','+86 17359805562',0,0,0,0);
+insert into tb_food(id,userid,fileid,title,contentdetails,selfcomment,phonenumber,likes,stars,shares,reads)
+values(5,4,7,'西班牙海鲜饭','西班牙海鲜饭（Paella，音译为巴埃加），西餐三大名菜之一，与法国蜗牛、意大利面齐名。西班牙海鲜饭源于西班牙鱼米之都——瓦伦西亚，是以西班牙产艮米为原料的一种饭类食品。西班牙海鲜饭卖相绝佳，黄澄澄的饭粒出自名贵的香料藏红花，饭中点缀着无数虾子、螃蟹、黑蚬、蛤、牡蛎、鱿鱼……热气腾腾，令人垂涎。','作为西班牙菜肴中的惊叹号，西班牙海鲜饭连锅上桌后浓郁扑鼻的撩人海洋香气，黄澄澄吸够了高汤精华的米粒，以及五颜六色点缀米饭中的多样食材，总能叫人感官骚动，味蕾大开。','+86 16577851001',0,0,0,0);
 ```
 
 

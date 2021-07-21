@@ -82,8 +82,10 @@ public class TableUserInfoActivity extends AppCompatActivity {
 
         System.out.println("InsertUserInfo function called!!!!!!!");
 
-        UserInfoDBHelper dbHelper = new UserInfoDBHelper(TableUserInfoActivity.this, "tb_userinfo", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*UserInfoDBHelper dbHelper = new UserInfoDBHelper(TableUserInfoActivity.this, "tb_userinfo", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserInfoDBHelper.dbPath,null);
 
 
         ContentValues cv = new ContentValues();
@@ -117,8 +119,10 @@ public class TableUserInfoActivity extends AppCompatActivity {
     }
 
     public boolean updateUserInfoByUserId(int id){
-        UserInfoDBHelper dbHelper = new UserInfoDBHelper(TableUserInfoActivity.this, "tb_userinfo", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*UserInfoDBHelper dbHelper = new UserInfoDBHelper(TableUserInfoActivity.this, "tb_userinfo", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserInfoDBHelper.dbPath,null);
 
 
         ContentValues cv = new ContentValues();
@@ -136,8 +140,9 @@ public class TableUserInfoActivity extends AppCompatActivity {
 
 
     public boolean queryAllById(int id){
-        UserInfoDBHelper dbHelper = new UserInfoDBHelper(TableUserInfoActivity.this, "tb_userinfo", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*UserInfoDBHelper dbHelper = new UserInfoDBHelper(TableUserInfoActivity.this, "tb_userinfo", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserInfoDBHelper.dbPath,null);
 
         Cursor cursor = db.query("tb_userinfo", null, "userid=?", new String[]{String.valueOf(id)}, null, null, null);
 
