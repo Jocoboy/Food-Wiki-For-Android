@@ -20,6 +20,7 @@ public class TableFileActivity extends AppCompatActivity {
     public static final int INSERT_FIGURE = 1;
     public static final int GET_BIN = 2;
     public static final int INSERT_FOOD = 3;
+    public static final int INSERT_GENERAL = 4;
 
     public static final int TYPE_GENERAL= 200;
     public static final int TYPE_FIGURE = 201;
@@ -47,6 +48,9 @@ public class TableFileActivity extends AppCompatActivity {
             case INSERT_FOOD:
                 insertFile(TYPE_FOOD);
                 break;
+            case INSERT_GENERAL:
+                insertFile(TYPE_GENERAL);
+                break;
             case GET_BIN:
                 int figureid = intent.getIntExtra("figureid",-1);
                 int pos = intent.getIntExtra("mData_current_pos",-1);
@@ -72,20 +76,23 @@ public class TableFileActivity extends AppCompatActivity {
     }
 
     public byte[] getBytes(long id){
-        FileDBHelper dbHelper = new FileDBHelper(TableFileActivity.this, "tb_file", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*FileDBHelper dbHelper = new FileDBHelper(TableFileActivity.this, "tb_file", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(FileDBHelper.dbPath,null);
 
         Cursor cursor = db.query("tb_file", null, "id=?", new String[]{String.valueOf(id)}, null, null, null);
         byte[] bin = null;
         if((cursor.moveToFirst())){
             bin = cursor.getBlob(cursor.getColumnIndex("bin"));
         }
+        db.close();
         return bin;
     }
 
     public long insertFile(int type){
-        FileDBHelper dbHelper = new FileDBHelper(TableFileActivity.this, "tb_file", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*FileDBHelper dbHelper = new FileDBHelper(TableFileActivity.this, "tb_file", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(FileDBHelper.dbPath,null);
 
         ContentValues cv = new ContentValues();
 
@@ -94,7 +101,7 @@ public class TableFileActivity extends AppCompatActivity {
             cv.put("name", "默认头像");
             cv.put("extension", "png");
             cv.put("bin", img);
-            cv.put("path", "null");
+         //   cv.put("path", "null");
             cv.put("descripiton", "用户尚未上传个人头像，使用默认头像");
         }
         else if(type == TYPE_FOOD){
@@ -102,15 +109,16 @@ public class TableFileActivity extends AppCompatActivity {
             cv.put("name", "默认封面");
             cv.put("extension", "png");
             cv.put("bin", img);
-            cv.put("path", "null");
+          //  cv.put("path", "null");
             cv.put("descripiton", "用户尚未上传美食封面，使用默认封面");
         }
         else{
-            cv.put("name", name);
-            cv.put("extension", ext);
+            img = ConvertDrawableToBytes(R.drawable.img_figure_4);
+            cv.put("name", "个人头像4");
+            cv.put("extension", "jpg");
             cv.put("bin", img);
-            cv.put("path", path);
-            cv.put("descripiton", description);
+         //   cv.put("path", path);
+            cv.put("descripiton", "用户上传个人头像之一");
         }
         long resid = db.insert("tb_file", null, cv);
 

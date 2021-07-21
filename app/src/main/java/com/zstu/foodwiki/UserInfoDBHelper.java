@@ -8,6 +8,7 @@ import android.util.Log;
 public class UserInfoDBHelper extends SQLiteOpenHelper {
     private  static final  String TAG = "UserInfoSQLite";
     public static final  int VERSION = 1;
+    public static final String dbPath = "/data/data/com.zstu.foodwiki/databases/foodwiki.db";
 
     public UserInfoDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

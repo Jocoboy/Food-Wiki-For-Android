@@ -92,8 +92,9 @@ public class TableFoodActivity extends AppCompatActivity {
 
 
     public long insertFoodInfo(boolean setDefalutValue){
-        FoodDBHelper dbHelper = new FoodDBHelper(TableFoodActivity.this, "tb_food", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+       /* FoodDBHelper dbHelper = new FoodDBHelper(TableFoodActivity.this, "tb_food", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(FoodDBHelper.dbPath,null);
 
         ContentValues cv = new ContentValues();
 
@@ -131,8 +132,9 @@ public class TableFoodActivity extends AppCompatActivity {
 
 
     public boolean queryAll(int count){
-        FoodDBHelper dbHelper = new FoodDBHelper(TableFoodActivity.this, "tb_food", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*FoodDBHelper dbHelper = new FoodDBHelper(TableFoodActivity.this, "tb_food", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(FoodDBHelper.dbPath,null);
 
         Cursor cursor = db.query("tb_food", null, null,null, null, null, "id");
         foodEntityList = new ArrayList<FoodEntity>();
@@ -165,7 +167,7 @@ public class TableFoodActivity extends AppCompatActivity {
 
             count--;
         }
-
+        db.close();
         return  true;
     }
 }

@@ -77,8 +77,9 @@ public class TableUserActivity extends AppCompatActivity {
 
     public boolean checkColumnExist(String username) {
 
-        UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+       /* UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserDBHelper.dbPath,null);
 
         db.beginTransaction();
         boolean res = false;
@@ -96,6 +97,7 @@ public class TableUserActivity extends AppCompatActivity {
                     cursor.close();
             }
         }
+        db.close();
         return  res;
     }
 
@@ -104,8 +106,9 @@ public class TableUserActivity extends AppCompatActivity {
 
     public  String queryUserPassword(String username){
 
-        UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserDBHelper.dbPath,null);
 
         String password="";
         Cursor cursor = db.query("tb_user", new String[]{"password","id"}, "username=?", new String[]{username}, null, null, null);
@@ -126,8 +129,9 @@ public class TableUserActivity extends AppCompatActivity {
 
     public int InsertUser(/*int id,*/String username,String password){
 
-        UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserDBHelper.dbPath,null);
 
         ContentValues cv = new ContentValues();
         //cv.put("id", id);
@@ -147,8 +151,10 @@ public class TableUserActivity extends AppCompatActivity {
 
     public void queryUser(int id){
 
-        UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserDBHelper.dbPath,null);
+
         Cursor cursor = db.query("tb_user", new String[]{"id","username","password"}, "username=?", new String[]{String.valueOf(id)}, null, null, null);
         while(cursor.moveToNext()){
             //String id = cursor.getString(cursor.getColumnIndex("id"));
@@ -162,8 +168,9 @@ public class TableUserActivity extends AppCompatActivity {
 
     public void modifyUserPassword(String username,String newPassword){
 
-        UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserDBHelper.dbPath,null);
 
         ContentValues cv = new ContentValues();
         cv.put("password", newPassword);
@@ -178,12 +185,15 @@ public class TableUserActivity extends AppCompatActivity {
 
     public void deleteUser(int id){
 
-        UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*UserDBHelper dbHelper = new UserDBHelper(TableUserActivity.this, "tb_user", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(UserDBHelper.dbPath,null);
 
         String whereClauses = "id=?";
         String[] whereArgs = {String.valueOf(id)};
         db.delete("tb_user", whereClauses, whereArgs);
+
+        db.close();
     }
 
 
