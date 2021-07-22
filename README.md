@@ -112,6 +112,8 @@ create table tb_food(id integer primary key autoincrement,userid integer,fileid 
 create table tb_foodlike(id integer primary key autoincrement,userid integer,foodid integer,foreign key(userid) references tb_user(id),foreign key(foodid) references tb_food(id));
 
 create table tb_foodstar(id integer primary key autoincrement,userid integer,foodid integer,foreign key(userid) references tb_user(id),foreign key(foodid) references tb_food(id));
+
+create table tb_userfollow(id integer primary key autoincrement,userid integer,followid integer,iscancelfollow boolean,foreign key(userid) references tb_user(id),foreign key(followid) references tb_user(id));
 ```
 
 #### Data
@@ -168,6 +170,21 @@ insert into tb_food(id,userid,fileid,title,contentdetails,selfcomment,phonenumbe
 values(4,3,6,'西班牙天然原味肠','西班牙人在吃一些风干切片的香肠时,会把外面那一层肠衣撕下来。咱们国内那么多风肠熏肠腊肠,煮熟切片吃的时候,从来没有剥皮的习惯。','西班牙原味肠蘸着初榨橄榄油送入口中，有种舌尖烟花绽放的快感。入口滋味甘甜诱人，细腻的油脂像雪花一般融化在舌头上，满口回香，令人难忘。','+86 17359805562',0,0,0,0);
 insert into tb_food(id,userid,fileid,title,contentdetails,selfcomment,phonenumber,likes,stars,shares,reads)
 values(5,4,7,'西班牙海鲜饭','西班牙海鲜饭（Paella，音译为巴埃加），西餐三大名菜之一，与法国蜗牛、意大利面齐名。西班牙海鲜饭源于西班牙鱼米之都——瓦伦西亚，是以西班牙产艮米为原料的一种饭类食品。西班牙海鲜饭卖相绝佳，黄澄澄的饭粒出自名贵的香料藏红花，饭中点缀着无数虾子、螃蟹、黑蚬、蛤、牡蛎、鱿鱼……热气腾腾，令人垂涎。','作为西班牙菜肴中的惊叹号，西班牙海鲜饭连锅上桌后浓郁扑鼻的撩人海洋香气，黄澄澄吸够了高汤精华的米粒，以及五颜六色点缀米饭中的多样食材，总能叫人感官骚动，味蕾大开。','+86 16577851001',0,0,0,0);
+
+/****tb_foodlike*****/
+insert into tb_foodlike(id,userid,foodid) values(1,1,2);
+insert into tb_foodlike(id,userid,foodid) values(2,1,3);
+insert into tb_foodlike(id,userid,foodid) values(3,1,4);
+
+
+/****tb_foodstar*****/
+insert into tb_foodstar(id,userid,foodid) values(1,1,1);
+insert into tb_foodstar(id,userid,foodid) values(2,1,5);
+
+/****tb_userfollow*****/
+insert into tb_userfollow(id,userid,followid,iscancelfollow) values(1,1,2,false);
+insert into tb_userfollow(id,userid,followid,iscancelfollow) values(2,1,3,false);
+insert into tb_userfollow(id,userid,followid,iscancelfollow) values(3,1,4,false);
 ```
 
 

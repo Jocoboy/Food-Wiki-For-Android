@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener{
@@ -52,6 +54,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private int readers;
 
     private List<FoodEntity> mData;
+    private List<UserFollowEntity> mFollowData;
     private List<FoodLikeEntity> mLikeData;
     private List<FoodStarEntity> mStarData;
    // private int mData_current_pos;
@@ -123,8 +126,95 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         updateData(3);
 
+        updateData(7);
+    }
+
+    public void updateData(int requestCode){
+        switch (requestCode){
+            case 1:
+                /*************访问数据库：加载用户基本信息**************/
+                Intent intent = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
+                intent.putExtra("userid", userid);
+                intent.putExtra("operation", 1);
+                startActivityForResult(intent,requestCode);
+                break;
+            case 2:
+                /*************访问数据库：加载用户级联信息（用户头像）**************/
+                Intent intent2 = new Intent(HomePageActivity.this, TableFileActivity.class);
+                intent2.putExtra("figureid", figureid);
+                intent2.putExtra("operation", TableFileActivity.GET_BIN);
+                startActivityForResult(intent2, requestCode);
+                break;
+            case 3:
+                /*************访问数据库：加载美食推送基本信息**************/
+                Intent intent3 = new Intent(HomePageActivity.this,TableFoodActivity.class);
+                intent3.putExtra("count", 20);
+                intent3.putExtra("operation", TableFoodActivity.QUERY_ALL);
+                startActivityForResult(intent3, requestCode);
+                break;
+            case 4:
+                /***************访问数据库：加载美食推送级联信息(推送者)***************/
+                for(int i = 0 ; i < mData.size(); i++){
+                    //  mData_current_pos = i;
+                    int userid = mData.get(i).getFk_user_id();
+                    // mData.get(mData_current_pos).setBloger(userid+"");
+                    Intent intent4 = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
+                    intent4.putExtra("userid", userid);
+                    intent4.putExtra("operation", TableUserInfoActivity.GET_ALL);
+                    intent4.putExtra("mData_current_pos", i);
+                    startActivityForResult(intent4,requestCode);
+
+                }
+                break;
+            case 5:
+                /***************访问数据库：加载美食推送级联信息(美食封面)***************/
+                for(int i = 0 ; i < mData.size(); i++){
+                    // mData_current_pos = i;
+                    int fileid = mData.get(i).getFk_file_id();
+                    Intent intent5 = new Intent(HomePageActivity.this,TableFileActivity.class);
+                    intent5.putExtra("figureid", fileid);
+                    intent5.putExtra("operation", TableFileActivity.GET_BIN);
+                    intent5.putExtra("mData_current_pos", i);
+                    startActivityForResult(intent5,requestCode);
+
+                }
+                break;
+/*            case 6:
+                /***************访问数据库：加载美食详情信息(推送者头像)***************/
+ /*               for(int i = 0 ; i < mData.size(); i++){
+                    //mData_current_pos = i;
+                    int fileid = mData.get(i).getUserEntity().getFk_figure_id();
+                    Intent intent6 = new Intent(HomePageActivity.this,TableFileActivity.class);
+                    intent6.putExtra("figureid", fileid);
+                    intent6.putExtra("operation", TableFileActivity.GET_BIN);
+                    intent6.putExtra("mData_current_pos", i);
+                    startActivityForResult(intent6,requestCode);
+
+                }
+
+                break;
+*/
+            case 7:
+                Intent intent7 = new Intent(HomePageActivity.this,TableUserFollowActivity.class);
+                intent7.putExtra("userid", userid);
+                intent7.putExtra("operation", TableUserFollowActivity.QUERY);
+                startActivityForResult(intent7, 7);
+                break;
+            case 8:
+                for(int i = 0 ; i < mFollowData.size() ; i++){
+                    int followid = mFollowData.get(i).getFk_follow_id();
+                    Intent intent8 = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
+                    intent8.putExtra("userid", followid);
+                    intent8.putExtra("operation", TableUserInfoActivity.GET_ALL);
+                    intent8.putExtra("mData_current_pos", i);
+                    startActivityForResult(intent8, 8);
+                }
+            default:
+                break;
+        }
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -215,10 +305,71 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     int pos =  data.getIntExtra("mData_current_pos", -1);
                     mData.get(pos).getUserEntity().setFigurebin(mData_figure);
                     if(pos == mData.size() - 1 ){
-                        initTabView();
+
+
+                        if(mLikeData==null){
+                            mLikeData = new ArrayList<FoodLikeEntity>();
+                            for(int i = 1, j = 1 ; i <= 3 ; i++,j++){
+                                FoodLikeEntity foodLikeEntity = new FoodLikeEntity(j,userid,mData.get(i).getPk_food_id());
+                                foodLikeEntity.setFoodEntity(mData.get(i));
+                                mLikeData.add(foodLikeEntity);
+                            }
+                        }
+
+                        if(mStarData==null){
+                            mStarData = new ArrayList<FoodStarEntity>();
+                            for(int i = 0, j = 1 ; i <= 4 ; i+=4,j++){
+                                FoodStarEntity foodStarEntity = new FoodStarEntity(j,userid,mData.get(i).getPk_food_id());
+                                foodStarEntity.setFoodEntity(mData.get(i));
+                                mStarData.add(foodStarEntity);
+                            }
+                        }
+
+                      //  initTabView();
                     }
                 }
                 break;
+            case 7:
+                if(resultCode==200){
+                    mFollowData = (List<UserFollowEntity>)data.getSerializableExtra("userFollowEntityList");
+
+                    updateData(8);
+                }
+                break;
+            case 8:
+                if(resultCode==290){
+                    int userid = data.getIntExtra("userid", -1);
+                    int figureid = data.getIntExtra("figureid", -1);
+                    String name  = data.getStringExtra("name");
+                    String remark = data.getStringExtra("remark");
+                    int follows = data.getIntExtra("follows", -1);
+                    int followers = data.getIntExtra("followers", -1);
+                    int readers = data.getIntExtra("readers", -1);
+
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+
+                    UserEntity userEntity = new UserEntity(userid,figureid,name,remark,follows,followers,readers);
+
+                    mFollowData.get(pos).setUserEntity(userEntity);
+
+                    Intent intent9 = new Intent(HomePageActivity.this,TableFileActivity.class);
+                    intent9.putExtra("figureid", figureid);
+                    intent9.putExtra("operation", TableFileActivity.GET_BIN);
+                    intent9.putExtra("mData_current_pos", pos);
+                    startActivityForResult(intent9,9);
+
+                }
+                break;
+            case 9:
+                if(resultCode==300){
+                    byte[] mFollowData_figure = data.getByteArrayExtra("figure_bin");
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+                    mFollowData.get(pos).getUserEntity().setFigurebin(mFollowData_figure);
+                    if(pos == mFollowData.size() - 1 ){
+                        initTabView();
+
+                    }
+                }
         }
     }
 
@@ -260,80 +411,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-    public void loadData(){
+  /*  public void loadData(){
 
     }
-
-    public void updateData(int requestCode){
-        switch (requestCode){
-            case 1:
-                /*************访问数据库：加载用户基本信息**************/
-                Intent intent = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
-                intent.putExtra("userid", userid);
-                intent.putExtra("operation", 1);
-                startActivityForResult(intent,requestCode);
-                break;
-            case 2:
-                /*************访问数据库：加载用户级联信息（用户头像）**************/
-                Intent intent2 = new Intent(HomePageActivity.this, TableFileActivity.class);
-                intent2.putExtra("figureid", figureid);
-                intent2.putExtra("operation", TableFileActivity.GET_BIN);
-                startActivityForResult(intent2, requestCode);
-                break;
-            case 3:
-                /*************访问数据库：加载美食推送基本信息**************/
-                Intent intent3 = new Intent(HomePageActivity.this,TableFoodActivity.class);
-                intent3.putExtra("count", 20);
-                intent3.putExtra("operation", TableFoodActivity.QUERY_ALL);
-                startActivityForResult(intent3, requestCode);
-                break;
-            case 4:
-                /***************访问数据库：加载美食推送级联信息(推送者)***************/
-                for(int i = 0 ; i < mData.size(); i++){
-                  //  mData_current_pos = i;
-                    int userid = mData.get(i).getFk_user_id();
-                    // mData.get(mData_current_pos).setBloger(userid+"");
-                    Intent intent4 = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
-                    intent4.putExtra("userid", userid);
-                    intent4.putExtra("operation", TableUserInfoActivity.GET_ALL);
-                    intent4.putExtra("mData_current_pos", i);
-                    startActivityForResult(intent4,requestCode);
-
-                }
-                break;
-            case 5:
-                /***************访问数据库：加载美食推送级联信息(美食封面)***************/
-                for(int i = 0 ; i < mData.size(); i++){
-                   // mData_current_pos = i;
-                    int fileid = mData.get(i).getFk_file_id();
-                    Intent intent5 = new Intent(HomePageActivity.this,TableFileActivity.class);
-                    intent5.putExtra("figureid", fileid);
-                    intent5.putExtra("operation", TableFileActivity.GET_BIN);
-                    intent5.putExtra("mData_current_pos", i);
-                    startActivityForResult(intent5,requestCode);
-
-                }
-                break;
-/*            case 6:
-                /***************访问数据库：加载美食详情信息(推送者头像)***************/
- /*               for(int i = 0 ; i < mData.size(); i++){
-                    //mData_current_pos = i;
-                    int fileid = mData.get(i).getUserEntity().getFk_figure_id();
-                    Intent intent6 = new Intent(HomePageActivity.this,TableFileActivity.class);
-                    intent6.putExtra("figureid", fileid);
-                    intent6.putExtra("operation", TableFileActivity.GET_BIN);
-                    intent6.putExtra("mData_current_pos", i);
-                    startActivityForResult(intent6,requestCode);
-
-                }
-
-                break;
 */
-                default:
-                    break;
-        }
-
-    }
 
 
    /* public void processData(){
@@ -423,14 +504,36 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             case MY_FOLLOW:
-                for (int i = 0; i < /*mData.size()*/2; i++) {
-                View view = View.inflate(HomePageActivity.this, R.layout.item_bloger, null);
-                //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
-                layout.addView(view, i);
-            }
+                        for (int i = 0; i < mFollowData.size(); i++) {
+                            final int index = i;
+
+                            View view = View.inflate(HomePageActivity.this, R.layout.item_bloger, null);
+
+                            byte[] figure_bin = mFollowData.get(i).getUserEntity().getFigurebin();
+                            Bitmap figure_bmp = BitmapFactory.decodeByteArray(figure_bin, 0, figure_bin.length);
+                            ((ImageView) view.findViewById(R.id.iv_bloger)).setImageBitmap(figure_bmp);
+
+                            ((TextView) view.findViewById(R.id.tv_name)).setText(mFollowData.get(index).getUserEntity().getName());
+                            ((TextView) view.findViewById(R.id.tv_description_bloger)).setText(mFollowData.get(index).getUserEntity().getRemark());
+
+                            boolean isCancelFollow = mFollowData.get(i).getIsCancelFollow();
+                            ((CheckBox) view.findViewById(R.id.cb_remember_password)).setChecked(!isCancelFollow);
+
+                            view.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                   CheckBox cb = v.findViewById(R.id.cb_remember_password);
+                                   boolean state = cb.isChecked();
+                                   cb.setChecked(!state);
+                                   cb.setText(!state ? "取消关注":"关注");
+                                }
+                            });
+
+                            layout.addView(view, i);
+                    }
                 break;
             case MY_STAR:
-                    /*for (int i = 0; i < mStarData.size(); i++) {
+                    for (int i = 0; i < mStarData.size(); i++) {
                         final int index = i;
 
                         View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
@@ -454,15 +557,15 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(HomePageActivity.this,DetailPageActivity.class);
-                                intent.putExtra("foodEntity", (Serializable) mLikeData.get(index).getFoodEntity());
+                                intent.putExtra("foodEntity", (Serializable) mStarData.get(index).getFoodEntity());
                                 startActivity(intent);
                             }
                         });
                         layout.addView(view, i);
                     }
-                break;*/
+                break;
             case MY_LIKE:
-                    /*for (int i = 0; i < mLikeData.size(); i++) {
+                    for (int i = 0; i < mLikeData.size(); i++) {
                         final int index = i;
 
                         View view = View.inflate(HomePageActivity.this, R.layout.item_food, null);
@@ -492,7 +595,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                         });
                         layout.addView(view, i);
                     }
-                break;*/
+                break;
             case MY_COMMENT:
                 for (int i = 0; i < /*mData.size()*/7; i++) {
                     View view = View.inflate(HomePageActivity.this, R.layout.item_comment, null);
