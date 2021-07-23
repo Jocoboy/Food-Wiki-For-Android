@@ -10,6 +10,7 @@ public class FoodStarDBHelper extends SQLiteOpenHelper {
     private  static final  String TAG = "FoodStarSQLite";
     public static final  int VERSION = 1;
 
+    public static final String dbPath = "/data/data/com.zstu.foodwiki/databases/foodwiki.db";
 
     public FoodStarDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

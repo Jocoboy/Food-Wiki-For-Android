@@ -17,6 +17,7 @@ public class TableFoodActivity extends AppCompatActivity {
 
     public static final int INSERT = 1;
     public static final int QUERY_ALL = 2;
+    public static final int QUERY_SINGLE = 3;
 
     private int pk_id;
     private int user_id;
@@ -33,6 +34,7 @@ public class TableFoodActivity extends AppCompatActivity {
    // private String bloger;
    // private byte[] foodbin;
 
+    private FoodEntity foodEntity;
     private List<FoodEntity> foodEntityList;
 
     @Override
@@ -67,6 +69,18 @@ public class TableFoodActivity extends AppCompatActivity {
                     finish();
                 }
                 break;
+            case QUERY_SINGLE:
+                pk_id = intent.getIntExtra("foodid", -1);
+                int pos = intent.getIntExtra("mData_current_pos",-1);
+                if(querySingle()){
+                    Intent intent3 = new Intent();
+                    intent3.putExtra("foodEntity", (Serializable) foodEntity);
+                    if(pos!=-1){
+                        intent3.putExtra("mData_current_pos", pos);
+                    }
+                    setResult(140,intent3);
+                    finish();
+                }
                 default:
                     break;
         }
@@ -130,6 +144,31 @@ public class TableFoodActivity extends AppCompatActivity {
         return resid;
     }
 
+
+    public boolean querySingle(){
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(FoodDBHelper.dbPath,null);
+
+        String selection = "id=?";
+        String[] selectionArgs = new String[]{String.valueOf(pk_id)};
+        Cursor cursor = db.query("tb_food", null, selection,selectionArgs, null, null, null);
+        while(cursor.moveToNext()){
+
+            user_id = cursor.getInt(cursor.getColumnIndex("userid"));
+            file_id = cursor.getInt(cursor.getColumnIndex("fileid"));
+
+            title = cursor.getString(cursor.getColumnIndex("title"));
+            contentdetails = cursor.getString(cursor.getColumnIndex("contentdetails"));
+            selfcomment = cursor.getString(cursor.getColumnIndex("selfcomment"));
+            phonenumber = cursor.getString(cursor.getColumnIndex("phonenumber"));
+            likes =  cursor.getInt(cursor.getColumnIndex("likes"));
+            stars = cursor.getInt(cursor.getColumnIndex("stars"));
+            shares = cursor.getInt(cursor.getColumnIndex("shares"));
+            reads =  cursor.getInt(cursor.getColumnIndex("reads"));
+        }
+        foodEntity = new FoodEntity(pk_id,user_id,file_id,title,contentdetails,selfcomment,phonenumber,likes, stars, shares, reads);
+        db.close();
+        return  true;
+    }
 
     public boolean queryAll(int count){
         /*FoodDBHelper dbHelper = new FoodDBHelper(TableFoodActivity.this, "tb_food", null, 1);
