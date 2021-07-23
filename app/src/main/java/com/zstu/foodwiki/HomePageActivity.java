@@ -57,6 +57,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     private List<UserFollowEntity> mFollowData;
     private List<FoodLikeEntity> mLikeData;
     private List<FoodStarEntity> mStarData;
+    private List<CommentEntity> mCommentData;
    // private int mData_current_pos;
     //private List<UserEntity> nData;
    // private int nData_current_pos;
@@ -127,6 +128,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         updateData(3);
 
         updateData(7);
+
+
+        updateData(10);
     }
 
     public void updateData(int requestCode){
@@ -198,7 +202,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 Intent intent7 = new Intent(HomePageActivity.this,TableUserFollowActivity.class);
                 intent7.putExtra("userid", userid);
                 intent7.putExtra("operation", TableUserFollowActivity.QUERY);
-                startActivityForResult(intent7, 7);
+                startActivityForResult(intent7, requestCode);
                 break;
             case 8:
                 for(int i = 0 ; i < mFollowData.size() ; i++){
@@ -207,8 +211,35 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     intent8.putExtra("userid", followid);
                     intent8.putExtra("operation", TableUserInfoActivity.GET_ALL);
                     intent8.putExtra("mData_current_pos", i);
-                    startActivityForResult(intent8, 8);
+                    startActivityForResult(intent8, requestCode);
                 }
+                break;
+            case 10:
+                Intent intent10 = new Intent(HomePageActivity.this,TableCommentActivity.class);
+                intent10.putExtra("userid", userid);
+                intent10.putExtra("operation", TableCommentActivity.QUERY_BY_TARGETID);
+                startActivityForResult(intent10, requestCode);
+                break;
+            case 11:
+                for(int i = 0 ; i < mCommentData.size(); i++){
+                    int userid = mCommentData.get(i).getFk_user_id();
+                    Intent intent11 = new Intent(HomePageActivity.this,TableUserInfoActivity.class);
+                    intent11.putExtra("userid", userid);
+                    intent11.putExtra("operation", TableUserInfoActivity.GET_ALL);
+                    intent11.putExtra("mData_current_pos", i);
+                    startActivityForResult(intent11,requestCode);
+                }
+                break;
+            case 13:
+                for(int i = 0 ; i < mCommentData.size(); i++){
+                    int foodid = mCommentData.get(i).getFk_food_id();
+                    Intent intent13= new Intent(HomePageActivity.this,TableFoodActivity.class);
+                    intent13.putExtra("foodid", foodid);
+                    intent13.putExtra("operation", TableFoodActivity.QUERY_SINGLE);
+                    intent13.putExtra("mData_current_pos", i);
+                    startActivityForResult(intent13,requestCode);
+                }
+                break;
             default:
                 break;
         }
@@ -365,6 +396,67 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     byte[] mFollowData_figure = data.getByteArrayExtra("figure_bin");
                     int pos =  data.getIntExtra("mData_current_pos", -1);
                     mFollowData.get(pos).getUserEntity().setFigurebin(mFollowData_figure);
+
+                }
+                break;
+            case 10:
+                if(resultCode==233){
+                    mCommentData = (List<CommentEntity>)data.getSerializableExtra("commentEntityList");
+                    updateData(11);
+                    updateData(13);
+                }
+                break;
+            case 11:
+                if(resultCode==290){
+                    int userid = data.getIntExtra("userid", -1);
+                    int figureid = data.getIntExtra("figureid", -1);
+                    String name  = data.getStringExtra("name");
+                    String remark = data.getStringExtra("remark");
+                    int follows = data.getIntExtra("follows", -1);
+                    int followers = data.getIntExtra("followers", -1);
+                    int readers = data.getIntExtra("readers", -1);
+
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+
+                    UserEntity userEntity = new UserEntity(userid,figureid,name,remark,follows,followers,readers);
+
+                    mCommentData.get(pos).setCommentUser(userEntity);
+
+                    Intent intent9 = new Intent(HomePageActivity.this,TableFileActivity.class);
+                    intent9.putExtra("figureid", figureid);
+                    intent9.putExtra("operation", TableFileActivity.GET_BIN);
+                    intent9.putExtra("mData_current_pos", pos);
+                    startActivityForResult(intent9,12);
+                }
+                break;
+            case 12:
+                if(resultCode==300){
+                    byte[] mComment_figure = data.getByteArrayExtra("figure_bin");
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+                    mCommentData.get(pos).getCommentUser().setFigurebin(mComment_figure);
+                }
+                break;
+            case 13:
+                if(resultCode==140){
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+                    FoodEntity foodEntity = (FoodEntity)data.getSerializableExtra("foodEntity");
+                    int figureid = foodEntity.getFk_file_id();
+                    mCommentData.get(pos).setCommentFood(foodEntity);
+
+
+
+                    Intent intent14 = new Intent(HomePageActivity.this,TableFileActivity.class);
+                    intent14.putExtra("figureid", figureid);
+                    intent14.putExtra("operation", TableFileActivity.GET_BIN);
+                    intent14.putExtra("mData_current_pos", pos);
+                    startActivityForResult(intent14,14);
+                }
+                break;
+            case 14:
+                if(resultCode==300){
+                    byte[] mComment_food= data.getByteArrayExtra("figure_bin");
+                    int pos =  data.getIntExtra("mData_current_pos", -1);
+                    mCommentData.get(pos).getCommentFood().setFoodbin(mComment_food);
                     if(pos == mFollowData.size() - 1 ){
                         initTabView();
 
@@ -597,9 +689,21 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     }
                 break;
             case MY_COMMENT:
-                for (int i = 0; i < /*mData.size()*/7; i++) {
+                for (int i = 0; i < mCommentData.size(); i++) {
                     View view = View.inflate(HomePageActivity.this, R.layout.item_comment, null);
-                    //  ((TextView) view.findViewById(R.id.tv_info)).setText(mData.get(i));
+
+                    byte[] figure_bin = mCommentData.get(i).getCommentUser().getFigurebin();
+                    Bitmap figure_bmp = BitmapFactory.decodeByteArray(figure_bin, 0, figure_bin.length);
+                    ((ImageView) view.findViewById(R.id.iv_bloger)).setImageBitmap(figure_bmp);
+
+                    byte[] food_bin = mCommentData.get(i).getCommentFood().getFoodbin();
+                    Bitmap food_bmp = BitmapFactory.decodeByteArray(food_bin, 0, food_bin.length);
+                    ((ImageView) view.findViewById(R.id.iv_whichfood)).setImageBitmap(food_bmp);
+
+                    ((TextView) view.findViewById(R.id.tv_name)).setText(mCommentData.get(i).getCommentUser().getName());
+                    ((TextView) view.findViewById(R.id.tv_comment_item)).setText(mCommentData.get(i).getComment());
+                    ((TextView) view.findViewById(R.id.tv_time)).setText(mCommentData.get(i).getDt());
+
                     layout.addView(view, i);
                 }
                 break;

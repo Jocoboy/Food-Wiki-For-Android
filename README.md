@@ -114,6 +114,8 @@ create table tb_foodlike(id integer primary key autoincrement,userid integer,foo
 create table tb_foodstar(id integer primary key autoincrement,userid integer,foodid integer,foreign key(userid) references tb_user(id),foreign key(foodid) references tb_food(id));
 
 create table tb_userfollow(id integer primary key autoincrement,userid integer,followid integer,iscancelfollow boolean,foreign key(userid) references tb_user(id),foreign key(followid) references tb_user(id));
+
+create table tb_comment(id integer primary key autoincrement,userid integer,foodid integer,tageruserid integer,comment varchar(500),dt datetime,foreign key(userid) references tb_user(id),foreign key(tageruserid) references tb_user(id),foreign key(foodid) references tb_food(id));
 ```
 
 #### Data
@@ -185,6 +187,12 @@ insert into tb_foodstar(id,userid,foodid) values(2,1,5);
 insert into tb_userfollow(id,userid,followid,iscancelfollow) values(1,1,2,false);
 insert into tb_userfollow(id,userid,followid,iscancelfollow) values(2,1,3,false);
 insert into tb_userfollow(id,userid,followid,iscancelfollow) values(3,1,4,false);
+
+
+/****tb_comment*****/
+insert into tb_comment(id,userid,foodid,tageruserid,comment,dt) values(1,2,1,1,"这是我吃过最好吃的纽西兰羊排！","2021-7-1 18:30");
+insert into tb_comment(id,userid,foodid,tageruserid,comment,dt) values(2,3,1,1,"纽西兰羊排单人份，够吃吗？","2021-7-9 12:05");
+insert into tb_comment(id,userid,foodid,tageruserid,comment,dt) values(3,4,2,1,"果木烤澳洲谷饲牛扒仅此一家哦~","2021-7-12 22:05");
 ```
 
 
@@ -233,7 +241,7 @@ sqlite> delete from tb_user where id="1";
 sqlite> drop table tb_user;
 ```
 
-## 核心类的设计和关系
+## 核心类的设计和关系()
 
 ![UML类图](documents\UML类图.png)
 
@@ -247,6 +255,32 @@ sqlite> drop table tb_user;
 
 ![登录界面](documents\登录界面.png)
 
-### 美食维基页面
+#### 个人信息设置页面
 
-![美食维基页面](documents\美食维基页面.png)
+![美食维基个人信息设置页面](documents\美食维基个人信息设置页面.jpg)
+
+### 美食维基核心页面
+
+#### 发布页面
+
+![美食维基发布页面](documents\美食维基发布页面.jpg)
+
+#### 首页
+
+![美食维基页面-首页](documents\美食维基页面-首页.jpg)
+
+#### 我的关注
+
+![美食维基页面-我的关注](documents\美食维基页面-我的关注.jpg)
+
+#### 我的收藏
+
+![美食维基页面-我的收藏](documents\美食维基页面-我的收藏.jpg)
+
+#### 我的点赞
+
+![美食维基页面-我的点赞](documents\美食维基页面-我的点赞.jpg)
+
+#### 回复我的
+
+![美食维基页面-回复我的](documents\美食维基页面-回复我的.jpg)

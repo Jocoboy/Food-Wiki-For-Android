@@ -61,6 +61,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_comment_item"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"

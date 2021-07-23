@@ -34,8 +34,9 @@ public class TableFoodLikeActivity extends AppCompatActivity {
     }
 
     public void insertFoodLike(){
-        FoodLikeDBHelper dbHelper = new FoodLikeDBHelper(TableFoodLikeActivity.this, "tb_foodlike", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        /*FoodLikeDBHelper dbHelper = new FoodLikeDBHelper(TableFoodLikeActivity.this, "tb_foodlike", null, 1);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();*/
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(FoodLikeDBHelper.dbPath,null);
 
         ContentValues cv = new ContentValues();
         //cv.put("id", id);

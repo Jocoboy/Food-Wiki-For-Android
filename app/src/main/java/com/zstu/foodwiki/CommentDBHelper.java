@@ -5,25 +5,29 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class FoodLikeDBHelper extends SQLiteOpenHelper {
+public class CommentDBHelper extends SQLiteOpenHelper {
 
-    private  static final  String TAG = "FoodLikeSQLite";
+    private  static final  String TAG = "CommentSQLite";
     public static final  int VERSION = 1;
 
     public static final String dbPath = "/data/data/com.zstu.foodwiki/databases/foodwiki.db";
 
-    public FoodLikeDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public CommentDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table tb_foodlike" +
+        String sql = "create table tb_comment" +
                 "(" +
                 "id integer primary key autoincrement," +
                 "userid integer," +
-                "foodid integer,"+
+                "foodid integer," +
+                "tageruserid integer,"+
+                "comment varchar(500),"+
+                "dt datetime,"+
                 "foreign key(userid) references tb_user(id),"+
+                "foreign key(tageruserid) references tb_user(id),"+
                 "foreign key(foodid) references tb_food(id)"+
                 ")";
         Log.i(TAG, "create Database------------->");
@@ -33,4 +37,6 @@ public class FoodLikeDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.i(TAG, "update Database------------->");
     }
+
+
 }
