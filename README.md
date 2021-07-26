@@ -31,15 +31,12 @@
 @startuml
 left to right direction
 actor 普通用户 as g
-actor 特权用户 as h
 package 用户{
   actor 普通用户as c
-  actor "特权用户" as fc
 }
 package 维基页面服务{
   usecase "维基页面发布" as UC1
-  usecase "维基页面修改(仅自身）" as UC2
-  usecase "维基页面修改(自身和他人）" as UC10
+  usecase "维基页面修改" as UC2
   usecase "维基页面收藏" as UC3
   usecase "维基页面点赞" as UC4
   usecase "维基页面评论" as UC5
@@ -48,7 +45,6 @@ package 维基页面服务{
 package 维基社交服务{
   usecase "关注" as UC7
   usecase "消息推送" as UC8
-  usecase "私信" as UC9
 }
 g --> UC1
 g --> UC2
@@ -58,12 +54,9 @@ g --> UC5
 g --> UC6
 g --> UC7
 g --> UC8
-g --> UC9
-h --> g
-h --> UC10
 @enduml
 ```
-![用例图](documents\用例图.png)
+![用例图](documents\UML用例图.png)
 
 ### 时序图
 
@@ -71,20 +64,16 @@ h --> UC10
 
 ```plantuml
 @startuml
+用户 ->  账号服务: 注册操作
 用户 ->  授权中心: 登录操作
-授权中心 -> 授权: 用户身份识别
-
-用户 <- 授权中心 : 授权成功返回身份标识
-用户 -> 授权中心: 下次访问头部携带身份标识
-授权中心 <- 授权:获取身份标识
-页面服务 <- 授权中心: 存在且校验成功则跳转到用户请求的美食维基页面服务
-页面服务 -> 用户: 信息
-社交服务 <- 授权中心: 存在且校验成功则跳转到用户请求的美食维基社交服务
-社交服务 -> 用户: 信息
+页面服务 <- 授权中心: 校验成功跳转到用户请求的美食维基页面服务
+页面服务 -> 用户: 美食维基首页
+页面服务 -> 用户: 美食维基美食维基个人信息设置页面
+页面服务 -> 用户: 美食维基美食维基发布页面
 @enduml
 ```
 
-![时序图](documents\时序图.png)
+![时序图](documents\UML时序图.png)
 
 ## 数据库设计
 
@@ -241,7 +230,7 @@ sqlite> delete from tb_user where id="1";
 sqlite> drop table tb_user;
 ```
 
-## 核心类的设计和关系()
+## 核心类的设计和关系
 
 ![UML类图](documents\UML类图.png)
 
